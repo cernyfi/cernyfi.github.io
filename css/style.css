@@ -1,10 +1,12 @@
 :root {
+  /* Light Theme Colors */
   --text: #4A4A4A;
   --background: #e0f4ff;
   --primary: #379ea5;
   --secondary: #065392;
   --accent: #e28894;
 }
+
 .dark-theme {
   --text: #e0f4ff;
   --background: #152c4e;
@@ -12,6 +14,7 @@
   --secondary: #1379cc;
   --accent: #e28894;
 }
+
 
 body {
   font-family: Arial, sans-serif;
@@ -22,20 +25,24 @@ body {
   color: var(--text);
   transition: background-color 0.3s, color 0.3s;
 }
+
 header {
   background: var(--primary);
   color: var(--background);
   padding: 1rem 0;
 }
+
 header ul {
   list-style: none;
   padding: 0;
   display: flex;
   justify-content: center;
 }
+
 header ul li {
   margin: 0 15px;
 }
+
 main {
   padding: 2rem;
 }
@@ -184,54 +191,4 @@ Styling */
 
 .dark-theme #theme-icon {
   content: "\f186"; /* Moon icon */
-}
-
-#nav-menu {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 0;
-  padding: 0;
-  transition: max-height 0.3s ease-in-out;
-}
-
-#nav-menu li {
-  margin: 0;
-}
-
-#hamburger-toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--background);
-  font-size: 24px;
-  cursor: pointer;
-  position: absolute;
-  top: 1rem;
-  right: 2rem;
-}
-
-#hamburger-toggle:focus {
-  outline: none;
-}
-
-@media (max-width: 768px) {
-  #nav-menu {
-    flex-direction: column;
-    align-items: center;
-    max-height: 0; /* Initially hidden */
-    overflow: hidden;
-  }
-
-  #nav-menu.show {
-    max-height: 300px; /* Adjust based on content */
-  }
-
-  #hamburger-toggle {
-    display: block;
-  }
-  header {
-    padding: 2rem 0; /* Further reduce padding for very small screens */
-  }
 }

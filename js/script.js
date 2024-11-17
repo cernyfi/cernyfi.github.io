@@ -29,5 +29,3 @@ themeToggle.addEventListener('click', () => {
     themeText.textContent = 'Dark Mode';
   }
 });
-
-
