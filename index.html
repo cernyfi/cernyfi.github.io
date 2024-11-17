@@ -7,6 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Filip Černý</title>
   <script>
+    // Function to change the URL
+    function changeURL() {
+      // Use History API to push a new state into the browser's history
+      history.pushState(null, '', '/home');
+      document.title = 'Home'; // Change the tab title if needed
+    }
+  </script>
+  <script>
     function openPdf() {
         const pdfWindow = window.open("docs/filipčerný.pdf", "_blank");
         pdfWindow.document.title = "Curriculum vitae";  // Set the title of the new tab
