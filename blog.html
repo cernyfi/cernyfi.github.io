@@ -28,13 +28,38 @@
   
       <main>
         <h1>Blog</h1>
-        <article>
-          <h2>Comming soon</h2>
-          <p>Lorem ipsum</p>
-          <a href="#">Read More</a>
-        </article>
-        <!-- Add more articles as needed -->
-      </main>
+    
+        <!-- Search Bar -->
+        <section>
+            <input type="text" id="search-bar" placeholder="Search blog posts..." oninput="filterPosts()">
+        </section>
+    
+        <!-- Blog Posts -->
+        <section id="blog-list">
+            <article data-date="2024-10-20" data-title="October Updates">
+                <h2>October Updates</h2>
+                <p>A quick recap of October's highlights...</p>
+                <a href="#">Read More</a>
+            </article>
+            <article data-date="2024-26-11" data-title="Slovensko - Slovenský ráj">
+                <h2>Slovakia - Slovenský ráj</h2>
+                <p>My mum, dad and I visited...</p>
+                <span class="post-date">November 26-30, 2024</span> 
+                <a href="svk2024.html">Read More</a>
+            </article>
+            <article data-date="2024-09-26" data-title="Krkonoše 2024">
+              <h2>Krkonoše 2024</h2>
+              <p>At 6 p.m. ...</p>
+              <a href="eng2024.html">Read More</a>
+          </article>
+            <article data-date="2024-09-26" data-title="Anglie 2024">
+              <h2>England 2024</h2>
+              <p>At 6 p.m. ...</p>
+              <a href="eng2024.html">Read More</a>
+          </article>
+        </section>
+    </main>
+    
 
   <footer>
     <p>&copy; 2024 Filip Černý. All rights reserved.</p>
@@ -45,6 +70,6 @@
 
     </div>
   </footer>
-
+  <script src="js/search.js" defer></script>
 </body>
 </html>
