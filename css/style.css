@@ -108,14 +108,16 @@ ul li a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
   background-color: var(--primary); /* Background color for the button */
   color: var(--background); /* Text color */
-  border: 1px solid var(--primary); /* Border to match background color */
+  border: 0px solid var(--accent); /* Border to match background color */
   border-radius: 25px; /* Rounded corners */
   padding: 8px 20px; /* Padding for the button */
   text-decoration: none; /* Remove underline from links */
   font-size: 16px;
   font-weight: 500;
+  display: flex;
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   cursor: pointer;
 }
@@ -125,28 +127,31 @@ ul li a:hover {
   background-color: var(--accent); /* Change background color on hover */
   color: var(--text); /* Change text color on hover */
   border-color: var(--accent); /* Change border color on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
+  transform: scale(1.1); /* Slightly enlarge the button */
 }
 
-/* Theme Toggle Button Styling */
+/* Theme Toggle Button 
+Styling */
 #theme-toggle {
+  display: inline-flex;
   background-color: var(--primary);
   color: var(--background);
-  border: 1px solid var(--primary);
-  padding: 8px 16px;
+  border: 0px solid var(--accent);
+  padding: 11px 20px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
   display: flex;
-  align-items: center;
+  align-items: right;
   border-radius: 25px;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 #theme-toggle:hover {
   background-color: var(--accent);
   color: var(--text);
   border-color: var(--accent);
+  transform: scale(1.1);
 }
 
 #theme-toggle i {
@@ -163,7 +168,7 @@ ul li a:hover {
 .dark-theme ul li a {
   background-color: var(--primary);
   color: var(--background);
-  border: 1px solid var(--primary);
+  border: 0px solid var(--primary);
 }
 
 .dark-theme ul li a:hover {
@@ -175,7 +180,7 @@ ul li a:hover {
 .dark-theme #theme-toggle {
   background-color: var(--primary);
   color: var(--background);
-  border: 1px solid var(--primary);
+  border: 0px solid var(--primary);
 }
 
 .dark-theme #theme-toggle:hover {
