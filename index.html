@@ -6,33 +6,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Filip Černý</title>
-  <script>
-    // Function to change the URL
-    function changeURL() {
-      // Use History API to push a new state into the browser's history
-      history.pushState(null, '', '/home');
-      document.title = 'Home'; // Change the tab title if needed
-    }
-  </script>
-  <script>
-    function openPdf() {
-        const pdfWindow = window.open("docs/filipčerný.pdf", "_blank");
-        pdfWindow.document.title = "Curriculum vitae";  // Set the title of the new tab
-    }
-  </script>
   <link rel="stylesheet" href="css/style.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+<script src="js/script.js"></script>
 </head>
 <body>
-  <script src="js/script.js"></script>
   <header>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="blog.html">Blog</a></li>
-        <li><a href="#" onclick="openPdf()">CV</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="docs/filipčerný.pdf" target="_blank">CV</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><button id="theme-toggle">
             <i id="theme-icon" class="fas fa-sun"></i>
