@@ -1,5 +1,4 @@
 :root {
-  /* Light Theme Colors */
   --text: #4A4A4A;
   --background: #e0f4ff;
   --primary: #379ea5;
@@ -15,7 +14,6 @@
   --accent: #e28894;
 }
 
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -29,8 +27,23 @@ body {
 header {
   background: var(--primary);
   color: var(--background);
-  padding: 1rem;
-  position: relative;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+header ul li {
+  margin: 0 15px;
 }
 
 #nav-menu {
@@ -67,37 +80,26 @@ header {
   #nav-menu {
     flex-direction: column;
     align-items: center;
-    max-height: 0; /* Initially hidden */
+    max-height: 0;
     overflow: hidden;
   }
 
   #nav-menu.show {
-    max-height: 300px; /* Adjust based on content */
+    max-height: 300px;
   }
 
   #hamburger-toggle {
     display: block;
   }
-}
 
-header {
-  padding: 20px 0;
-}
-@media (max-width: 768px) {
   header {
-    padding: 2rem 0; /* Further reduce padding for very small screens */
+    padding: 2rem 0;
   }
-}
-
-
-
-
-header ul li {
-  margin: 0 15px;
 }
 
 main {
   padding: 2rem;
+  padding-bottom: 140px;
 }
 
 footer {
@@ -111,6 +113,25 @@ footer {
   width: 100%;
 }
 
+footer .social-links {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+footer .social-icon {
+  color: var(--background);
+  text-decoration: none;
+  font-size: 24px;
+  transition: transform 0.2s;
+}
+
+footer .social-icon:hover {
+  color: var(--accent);
+  transform: scale(1.2);
+}
+
 .black-link {
   color: var(--text);
   text-decoration: none;
@@ -121,70 +142,54 @@ footer {
   color: var(--accent);
 }
 
-footer .social-links {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Space between icons */
-}
-
-footer .social-icon {
-  color: var(--background);
+.read-link {
+  color: var(--secondary);
   text-decoration: none;
-  font-size: 24px; /* Adjust icon size */
-  transition: transform 0.2s;
+  font-weight: bold;
 }
 
-footer .social-icon:hover {
+.read-link:hover {
   color: var(--accent);
-  transform: scale(1.2); /* Slightly enlarge icon on hover */
+  text-decoration: none
 }
-
-
 
 ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center; /* Center the menu items */
-  gap: 20px; /* Space between menu items */
+  justify-content: center;
+  gap: 20px;
 }
 
-/* Style each <li> to make it more modern */
 ul li {
   display: inline-block;
 }
 
-/* Style for buttons (links styled as buttons) */
 ul li a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: var(--primary); /* Background color for the button */
-  color: var(--background); /* Text color */
-  border: 0px solid var(--accent); /* Border to match background color */
-  border-radius: 25px; /* Rounded corners */
-  padding: 8px 20px; /* Padding for the button */
-  text-decoration: none; /* Remove underline from links */
+  background-color: var(--primary);
+  color: var(--background);
+  border: 0px solid var(--accent);
+  border-radius: 25px;
+  padding: 8px 20px;
+  text-decoration: none;
   font-size: 16px;
   font-weight: 500;
-  display: flex;
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   cursor: pointer;
 }
 
-/* Hover effect for the buttons */
 ul li a:hover {
-  background-color: var(--accent); /* Change background color on hover */
-  color: var(--text); /* Change text color on hover */
-  border-color: var(--accent); /* Change border color on hover */
-  transform: scale(1.1); /* Slightly enlarge the button */
+  background-color: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+  transform: scale(1.1);
 }
 
-/* Theme Toggle Button 
-Styling */
 #theme-toggle {
   display: inline-flex;
   background-color: var(--primary);
@@ -194,7 +199,6 @@ Styling */
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  display: flex;
   align-items: right;
   border-radius: 25px;
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
@@ -217,14 +221,14 @@ Styling */
   font-weight: 500;
 }
 
-/* Dark Theme Menu Button Styling */
 .dark-theme ul li a {
   background-color: var(--primary);
   color: var(--background);
   border: 0px solid var(--primary);
 }
 
-.dark-theme ul li a:hover {
+.dark-theme ul li a:hover,
+.dark-theme #theme-toggle:hover {
   background-color: var(--accent);
   color: var(--text);
   border-color: var(--accent);
@@ -236,14 +240,8 @@ Styling */
   border: 0px solid var(--primary);
 }
 
-.dark-theme #theme-toggle:hover {
-  background-color: var(--accent);
-  color: var(--text);
-  border-color: var(--accent);
-}
-
 .dark-theme #theme-icon {
-  content: "\f186"; /* Moon icon */
+  content: "\f186";
 }
 
 #search-bar {
@@ -265,7 +263,7 @@ Styling */
 }
 
 article {
-  border: 1px solid var(--primary);
+  border: 2px solid var(--primary);
   padding: 1rem;
   border-radius: 5px;
   background-color: var(--background);
@@ -301,55 +299,53 @@ article a:hover {
 
 h1, h2 {
   text-align: center;
-  color: #333;
+  color: var(--text);
 }
 
 .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Show more pictures on smaller screens */
+  gap: 10px; /* Adjust gap for consistent spacing */
+  padding: 10px;
 }
 
-/* Individual Gallery Item */
 .gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  aspect-ratio: 1; /* Maintain a square aspect ratio for all items */
 }
 
-/* Image Styling */
 .gallery-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures images cover the space without distortion */
+  display: block;
+  transition: transform 0.3s ease;
 }
 
-/* Description Styling */
-.description {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 10px;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* Hover Effect */
 .gallery-item:hover img {
-    transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+.description {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .gallery-item:hover .description {
-    opacity: 1;
+  opacity: 1;
 }
+
 .lightbox {
   display: none;
   position: fixed;
@@ -363,9 +359,41 @@ h1, h2 {
   z-index: 9999;
 }
 
-/* Ensure the image fits within the viewport */
 .lightbox img {
-  max-width: 90%;   /* Limit width to 90% of the viewport width */
-  max-height: 90%;  /* Limit height to 90% of the viewport height */
-  object-fit: contain; /* Ensure the image scales while maintaining aspect ratio */
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+
+@media (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller grid items for phones */
+    gap: 10px;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1; /* Square aspect ratio for small screens */
+  }
+}
+
+#share-btn {
+  background: none;
+  border: none;
+  color: var(--background);
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#share-btn:hover {
+  color: var(--accent);
+  transform: scale(1.2);
+}
+
+#share-btn:focus {
+  outline: none;
 }

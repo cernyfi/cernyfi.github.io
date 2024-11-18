@@ -29,3 +29,25 @@ themeToggle.addEventListener('click', () => {
     themeText.textContent = 'Dark Mode';
   }
 });
+
+
+  document.getElementById("share-btn").addEventListener("click", () => {
+    const pageUrl = window.location.href;
+    const pageTitle = document.title;
+
+    if (navigator.share) {
+      navigator.share({
+        title: pageTitle,
+        url: pageUrl
+      }).catch((error) => {
+        console.error("Error sharing:", error);
+      });
+    } else {
+      navigator.clipboard.writeText(pageUrl).then(() => {
+        alert("Link copied to clipboard!");
+      }).catch((error) => {
+        console.error("Error copying link:", error);
+      });
+    }
+  });
+
