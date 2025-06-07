@@ -427,7 +427,7 @@ h1, h2 {
   align-items: flex-start; /* aligns items to the top */
   justify-content: space-between;
   gap: 1rem;
-  padding: 2rem;
+  padding: 0.5rem;
 
   margin: 0 auto;
   flex-wrap: wrap; /* allow stacking on small screens */

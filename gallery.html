@@ -146,7 +146,7 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.4);
             color: white;
             border: none;
             font-size: 2rem;
@@ -158,8 +158,13 @@
         }
 
         .fullscreen-nav:hover {
-            background: var(--accent);
             transform: translateY(-50%) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .fullscreen-nav {
+          display: none;
+            }
         }
 
         .fullscreen-prev {
@@ -469,19 +474,56 @@ const images = [
         document.addEventListener("keydown", (e) => {
             const viewer = document.getElementById("fullscreen-viewer");
             if (viewer.style.display === "flex") {
-                switch(e.key) {
-                    case "Escape":
-                        closeFullscreen();
-                        break;
-                    case "ArrowLeft":
-                        showPreviousImage();
-                        break;
-                    case "ArrowRight":
-                        showNextImage();
-                        break;
-                }
+          switch(e.key) {
+              case "Escape":
+            closeFullscreen();
+            break;
+              case "ArrowLeft":
+            showPreviousImage();
+            break;
+              case "ArrowRight":
+            showNextImage();
+            break;
+          }
             }
         });
+
+        // Mobile swipe support for fullscreen viewer
+        (function() {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            const threshold = 50; // Minimum px to consider as swipe
+
+            const viewer = document.getElementById("fullscreen-viewer");
+            const img = viewer.querySelector("img");
+
+            img.addEventListener("touchstart", function(e) {
+          if (e.touches.length === 1) {
+              touchStartX = e.touches[0].clientX;
+          }
+            });
+
+            img.addEventListener("touchmove", function(e) {
+          if (e.touches.length === 1) {
+              touchEndX = e.touches[0].clientX;
+          }
+            });
+
+            img.addEventListener("touchend", function(e) {
+          if (touchStartX && touchEndX) {
+              const diff = touchEndX - touchStartX;
+              if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                showPreviousImage();
+            } else {
+                showNextImage();
+            }
+              }
+          }
+          touchStartX = 0;
+          touchEndX = 0;
+            });
+        })();
 
 
 
