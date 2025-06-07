@@ -14,12 +14,14 @@
   <body>
     <header>
       <nav>
-        <button id="hamburger-toggle" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
-        </button>
+        <button id="hamburger-toggle" aria-label="Toggle menu" style="display: flex; align-items: center; gap: 12px">
+  <span id="current-page-name"></span>
+  <i id="hamburger-icon" class="fas fa-bars"></i>
+  <i id="close-icon" class="fas fa-times" style="display:none;"></i>
+</button>
         <ul id="nav-menu">
-          <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-          <li><a href="blog.html"><i class="fa-brands fa-blogger"></i>Blog</a></li>
+          <li><a href="index.html" class="active"><i class="fas fa-home"></i>Home</a></li>
+          <li><a href="gallery.html"><i class="fa-solid fa-images"></i>Gallery</a></li>
           <li><a href="docs/cernyfilip.pdf" target="_blank"><i class="fa-solid fa-file"></i>CV</a></li>
           <li><a href="contact.html"><i class="fas fa-phone"></i>Contact</a></li>
           <li>
@@ -32,12 +34,20 @@
       </nav>
     </header>
   
-      <main>
-        <section class="intro">
-          <h1>Welcome</h1>
-          <p>Hello! I'm Filip Černý, currently a student at <a href="https://gfxs.cz" target="_blank" class="black-link">Gymnázium F. X. Šaldy</a>. I am learning Python programming as well as other languages. Also doing research at Akademie Věd ČR.</p>
-        </section>
-      </main>
+      <main>       <h1>Welcome</h1>
+  <section class="intro-container">
+   
+          <div class="intro">
+
+      <p>Hello! I'm Filip Černý, currently a student at <a href="https://gfxs.cz" target="_blank" class="black-link">Gymnázium F. X. Šaldy</a>. I am learning Python programming as well as other languages. Right now doing research at Akademie Věd ČR.</p>
+      <p>I love photography and all my photos are in the <a href="gallery.html" class="black-link">gallery</a>.</p>
+      <p>I wrote seminar paper about 2D materials.</p>
+    </div>
+    <div class="intro-photo">
+      <img src="photos/DSC_5794.jpg" alt="Photo of Filip Černý">
+    </div>
+  </section>
+</main>
 
   <footer>
     <p>&copy; 2024 Filip Černý. All rights reserved.</p>

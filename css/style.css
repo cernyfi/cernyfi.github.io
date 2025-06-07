@@ -42,6 +42,20 @@ header ul {
   gap: 20px;
 }
 
+@media (min-width: 769px) {
+  #hamburger-toggle {
+    display: none !important;
+  }
+}
+
+ul li a:hover,
+#theme-toggle:hover {
+  background-color: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
 header ul li {
   margin: 0 15px;
 }
@@ -61,15 +75,28 @@ header ul li {
 }
 
 #hamburger-toggle {
-  display: none;
-  background: none;
-  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  background-color: var(--primary);
   color: var(--background);
+  border: 0 solid var(--primary);
+  border-radius: 25px;
+  padding: 4px 10px;
   font-size: 24px;
   cursor: pointer;
   position: absolute;
   top: 1rem;
   right: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  border-width: 0;
+}
+
+#hamburger-toggle:hover {
+  background-color: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+  transform: scale(1.1);
 }
 
 #hamburger-toggle:focus {
@@ -184,12 +211,7 @@ ul li a {
   cursor: pointer;
 }
 
-ul li a:hover {
-  background-color: var(--accent);
-  color: var(--text);
-  border-color: var(--accent);
-  transform: scale(1.1);
-}
+
 
 #theme-toggle {
   display: inline-flex;
@@ -397,4 +419,45 @@ h1, h2 {
 
 #share-btn:focus {
   outline: none;
+}
+
+.intro-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* aligns items to the top */
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2rem;
+
+  margin: 0 auto;
+  flex-wrap: wrap; /* allow stacking on small screens */
+}
+
+.intro {
+  flex: 2;
+  min-width: 300px;
+}
+
+.intro-photo {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: flex-end; /* push photo to the right */
+}
+
+.intro-photo img {
+  max-width: 100%;
+  max-height: 67vh; /* limits height on large screens */
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  object-fit: contain;
+}
+
+ul li a.active {
+  background-color: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+  transform: scale(1.1);
+  pointer-events: none; /* optional: disable clicks on active */
 }

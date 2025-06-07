@@ -13,14 +13,16 @@
   <body>
     <header>
       <nav>
-        <button id="hamburger-toggle" aria-label="Toggle navigation">
-          <i class="fas fa-bars"></i>
-        </button>
+        <button id="hamburger-toggle" aria-label="Toggle menu" style="display: flex; align-items: center; gap: 12px">
+  <span id="current-page-name"></span>
+  <i id="hamburger-icon" class="fas fa-bars"></i>
+  <i id="close-icon" class="fas fa-times" style="display:none;"></i>
+</button>
         <ul id="nav-menu">
-          <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
-          <li><a href="blog.html"><i class="fa-brands fa-blogger"></i>Blog</a></li>
+          <li><a href="index.html" ><i class="fas fa-home"></i>Home</a></li>
+          <li><a href="gallery.html"><i class="fa-solid fa-images"></i>Gallery</a></li>
           <li><a href="docs/cernyfilip.pdf" target="_blank"><i class="fa-solid fa-file"></i>CV</a></li>
-          <li><a href="contact.html"><i class="fas fa-phone"></i>Contact</a></li>
+          <li><a href="contact.html" class="active"><i class="fas fa-phone"></i>Contact</a></li>
           <li>
             <button id="theme-toggle">
               <i id="theme-icon" class="fa fa-moon"></i>
@@ -32,7 +34,7 @@
     </header>
   
       <main>
-        <h1>Contact</h1>
+        <h1>Ways to connect with me</h1>
       
         <p>School email: cernyfi188@student.gfxs.cz</p>
         <p>Pesonal email: cernyfi@email.cz</p>
