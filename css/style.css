@@ -203,7 +203,7 @@ ul li a {
   color: var(--background);
   border: 0px solid var(--accent);
   border-radius: 25px;
-  padding: 8px 20px;
+  padding: 4px 10px;
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
@@ -218,7 +218,7 @@ ul li a {
   background-color: var(--primary);
   color: var(--background);
   border: 0px solid var(--accent);
-  padding: 11px 20px;
+  padding: 8px 10px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
