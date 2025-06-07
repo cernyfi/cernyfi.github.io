@@ -397,25 +397,7 @@ const images = [
                     });
 
                     // Mobile long-press to select
-                    let longPressTimer;
-                    card.addEventListener("touchstart", (e) => {
-                        longPressTimer = setTimeout(() => {
-                            card.classList.toggle("selected");
-                            if (selectedImages.has(img.name)) {
-                                selectedImages.delete(img.name);
-                            } else {
-                                selectedImages.add(img.name);
-                            }
-                        }, 500);
-                    });
-
-                    card.addEventListener("touchend", () => {
-                        clearTimeout(longPressTimer);
-                    });
-
-                    card.addEventListener("touchmove", () => {
-                        clearTimeout(longPressTimer);
-                    });
+                    
                 });
 
                 section.appendChild(title);
