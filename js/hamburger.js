@@ -43,7 +43,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // Close menu when clicking outside
   document.addEventListener('click', function (e) {
     const target = e.target;
+const clickedOutside = !navMenu.contains(event.target) && !hamburgerToggle.contains(event.target);
 
+  if (clickedOutside) {
+    navMenu.classList.remove('show');
+    hamburgerIcon.style.display = 'inline';
+    closeIcon.style.display = 'none';
+    pageNameSpan.style.display = 'inline'; // ✅ Fix: show text again
+  }
     // If menu is open and click is outside navMenu and hamburgerToggle
     if (navMenu.classList.contains('show') &&
         !navMenu.contains(target) &&
