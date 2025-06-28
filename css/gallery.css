@@ -1,0 +1,197 @@
+#controls {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        #yearFilter {
+            padding: 0.5rem;
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: var(--primary);
+            color: var(--background);
+        }
+
+        .year-group {
+            margin-bottom: 3rem;
+        }
+
+        .year-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 1rem;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+
+        .year-grid {
+            column-count: 6;
+            column-gap: 1rem;
+        }
+
+        @media (max-width: 2200px) {
+            .year-grid {
+                column-count: 5;
+            }
+        }
+
+        @media (max-width: 1900px) {
+            .year-grid {
+                column-count: 4;
+            }
+        }
+
+        @media (max-width: 1400px) {
+            .year-grid {
+                column-count: 3;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .year-grid {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .year-grid {
+                column-count: 1;
+            }
+        }
+
+        .photo-card {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .photo-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .photo-card.selected {
+            outline: 4px solid var(--accent);
+            transform: scale(0.98);
+        }
+
+        .photo-card img {
+            width: 100%;
+            border-radius: 8px;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .photo-card:hover img {
+            transform: scale(1.02);
+        }
+
+        
+
+        .photo-card:hover .photo-date {
+            opacity: 1;
+        }
+
+        #fullscreen-viewer {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.95);
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #fullscreen-viewer img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 50px rgba(255,255,255,0.1);
+        }
+
+        .fullscreen-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            padding: 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 10001;
+        }
+
+        .fullscreen-nav:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .fullscreen-nav {
+          display: none;
+            }
+        }
+
+        .fullscreen-prev {
+            left: 20px;
+        }
+
+        .fullscreen-next {
+            right: 20px;
+        }
+
+        .photo-date {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen-date {
+            position: absolute;
+            bottom: 10vh;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .close-btn {
+            padding: 2rem;
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
