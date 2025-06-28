@@ -125,28 +125,28 @@
             });
         }
 
-    const rotator = document.getElementById('rotator');
+      const rotator = document.getElementById('dividor');
   let isForward = true;
-        document.getElementById('digital-btn').addEventListener('click', () => toggleRotation());
-        document.getElementById('film-btn').addEventListener('click', () => toggleRotation());
+
+  document.getElementById('digital-btn').addEventListener('click', toggleRotation);
+  document.getElementById('film-btn').addEventListener('click', toggleRotation);
+
   function toggleRotation() {
     const icon = rotator.querySelector('i');
-    
+
+    // Clear previous animation class to retrigger it
+    icon.classList.remove('rotate-forward', 'rotate-backward');
+
+    void icon.offsetWidth; // Force reflow to restart animation
+
     if (isForward) {
-      icon.classList.remove('fa-rotate');
-      icon.classList.add('fa-rotate-right'); // visually same icon
-      icon.classList.remove('rotate-forward');
-      icon.classList.add('rotate-backward');
-    } else {
-      icon.classList.remove('fa-rotate-right');
-      icon.classList.add('fa-rotate');
-      icon.classList.remove('rotate-backward');
       icon.classList.add('rotate-forward');
+    } else {
+      icon.classList.add('rotate-backward');
     }
 
     isForward = !isForward;
   }
-
         // --- Photo Type Switch ---
         function switchPhotoType(type) {
             currentPhotoType = type;
