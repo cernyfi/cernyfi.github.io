@@ -11,15 +11,84 @@
             margin-bottom: 2rem;
             display: flex;
             justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        #yearFilter {
-            padding: 0.5rem;
-            border: 1px solid var(--primary);
-            border-radius: 5px;
+        .control-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        #categorySelector, #yearFilter {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
             font-size: 16px;
+            background-color: var(--background);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #categorySelector:hover, #yearFilter:hover {
             background-color: var(--primary);
             color: var(--background);
+            transform: translateY(-2px);
+        }
+
+        #categorySelector:focus, #yearFilter:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            justify-content: center;
+        }
+
+        .category-tab {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: var(--background);
+            color: var(--text);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-tab.active {
+            background: var(--primary);
+            color: var(--background);
+            transform: scale(1.05);
+        }
+
+        .category-tab.film {
+            border-color: #8B4513;
+            color: #8B4513;
+        }
+
+        .category-tab.film:hover {
+            background: #8B4513;
+            color: white;
+        }
+
+        .category-tab.film.active {
+            background: #8B4513;
+            color: white;
         }
 
         .year-group {
@@ -34,6 +103,18 @@
             text-align: center;
             border-bottom: 2px solid var(--primary);
             padding-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .year-title.film {
+            border-bottom-color: #8B4513;
+        }
+
+        .year-title.film::before {
+            content: "🎞️";
+            position: absolute;
+            left: -2rem;
+            font-size: 1.5rem;
         }
 
         .year-grid {
@@ -76,14 +157,36 @@
             margin-bottom: 1rem;
             position: relative;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.3s ease;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .photo-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            box-shadow: 4px 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-card.film {
+            border: 2px solid #8B4513;
+            border-radius: 12px;
+        }
+
+        .photo-card.film::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 48%, 
+                rgba(139, 69, 19, 0.1) 49%, 
+                rgba(139, 69, 19, 0.1) 51%, 
+                transparent 52%);
+            pointer-events: none;
+            z-index: 1;
         }
 
         .photo-card.selected {
@@ -98,11 +201,13 @@
             transition: transform 0.3s;
         }
 
+        .photo-card.film img {
+            filter: sepia(0.1) contrast(1.1) brightness(0.95);
+        }
+
         .photo-card:hover img {
             transform: scale(1.02);
         }
-
-        
 
         .photo-card:hover .photo-date {
             opacity: 1;
@@ -151,7 +256,7 @@
 
         @media (max-width: 768px) {
             .fullscreen-nav {
-          display: none;
+                display: none;
             }
         }
 
@@ -167,7 +272,7 @@
             position: absolute;
             bottom: 8px;
             left: 8px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.7);
             color: #fff;
             font-size: 0.75rem;
             padding: 4px 8px;
@@ -177,15 +282,20 @@
             transition: opacity 0.3s ease;
         }
 
+        .photo-card.film .photo-date {
+            background: rgba(139, 69, 19, 0.8);
+            border: 1px solid #8B4513;
+        }
+
         .fullscreen-date {
             position: absolute;
             bottom: 10vh;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 1rem;
             backdrop-filter: blur(4px);
         }
@@ -199,10 +309,44 @@
             font-size: 2rem;
             cursor: pointer;
             z-index: 10000;
+            transition: color 0.3s ease;
         }
 
         .close-btn:hover {
             color: var(--accent);
+        }
+
+        .category-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-card.film .category-indicator {
+            background: rgba(139, 69, 19, 0.8);
+            border: 1px solid #8B4513;
+        }
+
+        .photo-card:hover .category-indicator {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .category-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-group {
+                flex-direction: column;
+            }
         }
 
     </style>
@@ -234,15 +378,29 @@
 
     <main>
         <h1>My photos</h1>
-        <div id="controls">
-            <select id="yearFilter">
-                <option value="">All Years</option>
-            </select>
+        
+        <div class="category-tabs">
+            <a href="#" class="category-tab digital active" data-category="digital">
+                <i class="fas fa-camera"></i>
+                Digital
+            </a>
+            <a href="#" class="category-tab film" data-category="film">
+                <i class="fas fa-film"></i>
+                Film
+            </a>
         </div>
+
+        <div id="controls">
+            <div class="control-group">
+                <select id="yearFilter">
+                    <option value="">All Years</option>
+                </select>
+            </div>
+        </div>
+        
         <section id="gallery"></section>
     </main>
 
-    <!-- Fullscreen viewer -->
     <div id="fullscreen-viewer">
         <span class="close-btn">&times;</span>
         <button class="fullscreen-nav fullscreen-prev" id="fullscreen-prev">&#8249;</button>
@@ -252,7 +410,8 @@
     </div>
 
     <script>
-const images = [
+// Sample data - replace with your actual images
+const digitalImages = [
     { name: "IMG_1671.JPG", date: "2025-01-29" },
     { name: "IMG_1520.JPG", date: "2025-01-29" },
     { name: "IMG_1299.JPG", date: "2024-10-28" },
@@ -274,6 +433,23 @@ const images = [
     { name: "20210607_150806.jpg", date: "2021-06-07" },
     { name: "20180717_115952.jpg", date: "2018-07-17" },
     { name: "20170710_220646.jpg", date: "2017-07-10" },
+    { name: "IMG_1853.JPG", date: "2025-03-14" },
+    { name: "IMG_1861.JPG", date: "2025-03-14" },
+    { name: "IMG_1895.JPG", date: "2025-03-14" },
+    { name: "IMG_1912.JPG", date: "2025-03-14" },
+    { name: "IMG_1915.JPG", date: "2025-03-14" },
+    { name: "IMG_20240709_165137.jpg", date: "2024-07-09" },
+    { name: "IMG_3976.JPG", date: "2019-01-01" },
+    { name: "IMG_4021.JPG", date: "2019-01-01" },
+    { name: "IMG_4025.JPG", date: "2019-01-01" },
+    { name: "IMG_2047.JPG", date: "2025-05-08"},
+    { name: "IMG_2035.JPG", date: "2025-05-08"},
+    { name: "IMG_2038.JPG", date: "2025-05-08"},
+    { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31"}
+];
+
+// Film photos - move some of your CRW files here or add new ones
+const filmImages = [
     { name: "CRW_5505.jpg", date: "2022-07-12" },
     { name: "CRW_5524.jpg", date: "2022-07-12" },
     { name: "CRW_5550.jpg", date: "2022-07-12" },
@@ -304,242 +480,343 @@ const images = [
     { name: "CRW_7018.jpg", date: "2023-07-18" },
     { name: "CRW_7059.jpg", date: "2022-08-20" },
     { name: "CRW_7063.jpg", date: "2022-08-20" },
-    { name: "CRW_7072.jpg", date: "2022-08-20" },
-    { name: "IMG_1853.JPG", date: "2025-03-14" },
-    { name: "IMG_1861.JPG", date: "2025-03-14" },
-    { name: "IMG_1895.JPG", date: "2025-03-14" },
-    { name: "IMG_1912.JPG", date: "2025-03-14" },
-    { name: "IMG_1915.JPG", date: "2025-03-14" },
-    { name: "IMG_20240709_165137.jpg", date: "2024-07-09" },
-    { name: "IMG_3976.JPG", date: "2019-01-01" },
-    { name: "IMG_4021.JPG", date: "2019-01-01" },
-    { name: "IMG_4025.JPG", date: "2019-01-01" },
-    { name: "IMG_2047.JPG", date: "2025-05-08"},
-    { name: "IMG_2035.JPG", date: "2025-05-08"},
-    { name: "IMG_2038.JPG", date: "2025-05-08"},
-    { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31"}
+    { name: "CRW_7072.jpg", date: "2022-08-20" }
 ];
 
+let currentCategory = 'digital';
+let currentYear = '';
+let currentImages = [];
+let currentImageIndex = 0;
+let groupedByYear = {};
 
-        const groupedByYear = images
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .reduce((acc, img) => {
-                const year = new Date(img.date).getFullYear();
-                if (!acc[year]) acc[year] = [];
-                acc[year].push(img);
-                return acc;
-            }, {});
+const gallery = document.getElementById("gallery");
+const yearFilter = document.getElementById("yearFilter");
+const categoryTabs = document.querySelectorAll('.category-tab');
 
-        const gallery = document.getElementById("gallery");
-        const yearFilter = document.getElementById("yearFilter");
-        const selectedImages = new Set();
-        let currentImageIndex = 0;
-        let currentImages = [];
+// URL management
+function updateURL() {
+    const baseUrl = window.location.origin + window.location.pathname.replace('/gallery.html', '/gallery');
+    let newUrl = `${baseUrl}/${currentCategory}`;
+    if (currentYear) {
+        newUrl += `/${currentYear}`;
+    }
+    window.history.pushState({category: currentCategory, year: currentYear}, '', newUrl);
+}
 
-        // Populate year filter
-        function populateYearFilter() {
-            const years = Object.keys(groupedByYear).sort((a, b) => b - a);
-            years.forEach(year => {
-                const option = document.createElement("option");
-                option.value = year;
-                option.textContent = year;
-                yearFilter.appendChild(option);
+function parseURL() {
+    const path = window.location.pathname;
+    const hash = window.location.hash;
+    
+    // Handle both old and new URL formats
+    let category = 'digital';
+    let year = '';
+    
+    if (path.includes('/gallery/')) {
+        const parts = path.split('/gallery/')[1].split('/');
+        if (parts[0] && ['digital', 'film'].includes(parts[0])) {
+            category = parts[0];
+        }
+        if (parts[1] && !isNaN(parts[1])) {
+            year = parts[1];
+        }
+    } else if (hash) {
+        // Fallback for hash-based routing
+        const hashParts = hash.substring(1).split('/');
+        if (hashParts[0] && ['digital', 'film'].includes(hashParts[0])) {
+            category = hashParts[0];
+        }
+        if (hashParts[1] && !isNaN(hashParts[1])) {
+            year = hashParts[1];
+        }
+    }
+    
+    return { category, year };
+}
+
+function initializeFromURL() {
+    const { category, year } = parseURL();
+    currentCategory = category;
+    currentYear = year;
+    
+    // Update UI
+    updateCategoryTabs();
+    updateYearFilter();
+    renderGallery();
+}
+
+function updateCategoryTabs() {
+    categoryTabs.forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.category === currentCategory) {
+            tab.classList.add('active');
+        }
+    });
+}
+
+function getCurrentImages() {
+    return currentCategory === 'digital' ? digitalImages : filmImages;
+}
+
+function groupImagesByYear() {
+    const images = getCurrentImages();
+    groupedByYear = images
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .reduce((acc, img) => {
+            const year = new Date(img.date).getFullYear();
+            if (!acc[year]) acc[year] = [];
+            acc[year].push(img);
+            return acc;
+        }, {});
+}
+
+function populateYearFilter() {
+    // Clear existing options except "All Years"
+    yearFilter.innerHTML = '<option value="">All Years</option>';
+    
+    const years = Object.keys(groupedByYear).sort((a, b) => b - a);
+    years.forEach(year => {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        if (year === currentYear) {
+            option.selected = true;
+        }
+        yearFilter.appendChild(option);
+    });
+}
+
+function updateYearFilter() {
+    groupImagesByYear();
+    populateYearFilter();
+}
+
+function updateCurrentImages(filterYear = "") {
+    currentImages = [];
+    const yearsToShow = filterYear ? [filterYear] : Object.keys(groupedByYear).sort((a, b) => b - a);
+    
+    yearsToShow.forEach(year => {
+        if (groupedByYear[year]) {
+            currentImages.push(...groupedByYear[year]);
+        }
+    });
+}
+
+function renderGallery(filterYear = currentYear) {
+    gallery.innerHTML = "";
+    updateCurrentImages(filterYear);
+
+    const yearsToShow = filterYear ? [filterYear] : Object.keys(groupedByYear).sort((a, b) => b - a);
+
+    yearsToShow.forEach(year => {
+        if (!groupedByYear[year]) return;
+
+        const section = document.createElement("div");
+        section.className = "year-group";
+
+        const title = document.createElement("div");
+        title.className = `year-title ${currentCategory}`;
+        title.textContent = year;
+
+        const grid = document.createElement("div");
+        grid.className = "year-grid";
+
+        groupedByYear[year].forEach(img => {
+            const card = document.createElement("div");
+            card.className = `photo-card ${currentCategory}`;
+            card.dataset.filename = img.name;
+
+            const image = document.createElement("img");
+            image.src = `photos/${img.name}`;
+            image.alt = img.name;
+            image.loading = "lazy";
+
+            // Error handling for missing images
+            image.onerror = function() {
+                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBmb3VuZDwvdGV4dD48L3N2Zz4=';
+                this.alt = 'Image not found';
+            };
+
+            const dateLabel = document.createElement("div");
+            dateLabel.className = "photo-date";
+            dateLabel.textContent = new Date(img.date).toLocaleDateString();
+
+            const categoryIndicator = document.createElement("div");
+            categoryIndicator.className = "category-indicator";
+            categoryIndicator.textContent = currentCategory === 'digital' ? 'DIGITAL' : 'FILM';
+
+            card.appendChild(image);
+            card.appendChild(dateLabel);
+            card.appendChild(categoryIndicator);
+            grid.appendChild(card);
+
+            // Click to open fullscreen
+            card.addEventListener("click", (e) => {
+                e.preventDefault();
+                const imageIndex = currentImages.findIndex(item => item.name === img.name);
+                openFullscreen(imageIndex);
             });
-        }
-
-        function updateCurrentImages(filterYear = "") {
-            currentImages = [];
-            const yearsToShow = filterYear ? [filterYear] : Object.keys(groupedByYear).sort((a, b) => b - a);
-            
-            yearsToShow.forEach(year => {
-                if (groupedByYear[year]) {
-                    currentImages.push(...groupedByYear[year]);
-                }
-            });
-        }
-
-        function renderGallery(filterYear = "") {
-            gallery.innerHTML = "";
-            updateCurrentImages(filterYear);
-
-            const yearsToShow = filterYear ? [filterYear] : Object.keys(groupedByYear).sort((a, b) => b - a);
-
-            yearsToShow.forEach(year => {
-                if (!groupedByYear[year]) return;
-
-                const section = document.createElement("div");
-                section.className = "year-group";
-
-                const title = document.createElement("div");
-                title.className = "year-title";
-                title.textContent = year;
-
-                const grid = document.createElement("div");
-                grid.className = "year-grid";
-
-                groupedByYear[year].forEach(img => {
-                    const card = document.createElement("div");
-                    card.className = "photo-card";
-                    card.dataset.filename = img.name;
-
-                    const image = document.createElement("img");
-                    image.src = `photos/${img.name}`;
-                    image.alt = img.name;
-                    image.loading = "lazy";
-
-                    // Error handling for missing images
-                    image.onerror = function() {
-                        this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBmb3VuZDwvdGV4dD48L3N2Zz4=';
-                        this.alt = 'Image not found';
-                    };
-
-                    const label = document.createElement("div");
-                    label.className = "photo-date";
-                    label.textContent = new Date(img.date).toLocaleDateString();
-
-                    card.appendChild(image);
-                    card.appendChild(label);
-                    grid.appendChild(card);
-
-                    // Click to open fullscreen
-                    card.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        const imageIndex = currentImages.findIndex(item => item.name === img.name);
-                        openFullscreen(imageIndex);
-                    });
-
-                    // Mobile long-press to select
-                    
-                });
-
-                section.appendChild(title);
-                section.appendChild(grid);
-                gallery.appendChild(section);
-            });
-        }
-
-        function openFullscreen(imageIndex) {
-            currentImageIndex = imageIndex;
-            const img = currentImages[currentImageIndex];
-            const viewer = document.getElementById("fullscreen-viewer");
-            const viewerImg = viewer.querySelector("img");
-            const dateElement = document.getElementById("fullscreen-date");
-            
-            viewerImg.src = `photos/${img.name}`;
-            dateElement.textContent = new Date(img.date).toLocaleDateString();
-            viewer.style.display = "flex";
-            document.body.style.overflow = "hidden";
-        }
-
-        function showPreviousImage() {
-            if (currentImages.length > 1) {
-                currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-                openFullscreen(currentImageIndex);
-            }
-        }
-
-        function showNextImage() {
-            if (currentImages.length > 1) {
-                currentImageIndex = (currentImageIndex + 1) % currentImages.length;
-                openFullscreen(currentImageIndex);
-            }
-        }
-
-        function closeFullscreen() {
-            const viewer = document.getElementById("fullscreen-viewer");
-            viewer.style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-
-        // Event listeners
-        yearFilter.addEventListener("change", (e) => {
-            renderGallery(e.target.value);
         });
 
-        // Fullscreen viewer events
-        document.getElementById("fullscreen-viewer").addEventListener("click", (e) => {
-            if (e.target.id === "fullscreen-viewer") {
-                closeFullscreen();
-            }
-        });
-        document.querySelector(".close-btn").addEventListener("click", closeFullscreen);
-        document.getElementById("fullscreen-prev").addEventListener("click", (e) => {
-            e.stopPropagation();
-            showPreviousImage();
-        });
-        document.getElementById("fullscreen-next").addEventListener("click", (e) => {
-            e.stopPropagation();
-            showNextImage();
-        });
+        section.appendChild(title);
+        section.appendChild(grid);
+        gallery.appendChild(section);
+    });
+}
 
-        // Prevent closing when clicking on the image itself
-        document.querySelector("#fullscreen-viewer img").addEventListener("click", (e) => {
-            e.stopPropagation();
-        });
+function openFullscreen(imageIndex) {
+    currentImageIndex = imageIndex;
+    const img = currentImages[currentImageIndex];
+    const viewer = document.getElementById("fullscreen-viewer");
+    const viewerImg = viewer.querySelector("img");
+    const dateElement = document.getElementById("fullscreen-date");
+    
+    viewerImg.src = `photos/${img.name}`;
+    dateElement.textContent = new Date(img.date).toLocaleDateString();
+    viewer.style.display = "flex";
+    document.body.style.overflow = "hidden";
+}
 
-        // Keyboard navigation
-        document.addEventListener("keydown", (e) => {
-            const viewer = document.getElementById("fullscreen-viewer");
-            if (viewer.style.display === "flex") {
-          switch(e.key) {
-              case "Escape":
-            closeFullscreen();
-            break;
-              case "ArrowLeft":
-            showPreviousImage();
-            break;
-              case "ArrowRight":
-            showNextImage();
-            break;
-          }
-            }
-        });
+function showPreviousImage() {
+    if (currentImages.length > 1) {
+        currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+        openFullscreen(currentImageIndex);
+    }
+}
 
-        // Mobile swipe support for fullscreen viewer
-        (function() {
-            let touchStartX = 0;
-            let touchEndX = 0;
-            const threshold = 50; // Minimum px to consider as swipe
+function showNextImage() {
+    if (currentImages.length > 1) {
+        currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+        openFullscreen(currentImageIndex);
+    }
+}
 
-            const viewer = document.getElementById("fullscreen-viewer");
-            const img = viewer.querySelector("img");
+function closeFullscreen() {
+    const viewer = document.getElementById("fullscreen-viewer");
+    viewer.style.display = "none";
+    document.body.style.overflow = "auto";
+}
 
-            img.addEventListener("touchstart", function(e) {
-          if (e.touches.length === 1) {
-              touchStartX = e.touches[0].clientX;
-          }
-            });
-
-            img.addEventListener("touchmove", function(e) {
-          if (e.touches.length === 1) {
-              touchEndX = e.touches[0].clientX;
-          }
-            });
-
-            img.addEventListener("touchend", function(e) {
-          if (touchStartX && touchEndX) {
-              const diff = touchEndX - touchStartX;
-              if (Math.abs(diff) > threshold) {
-            if (diff > 0) {
-                showPreviousImage();
-            } else {
-                showNextImage();
-            }
-              }
-          }
-          touchStartX = 0;
-          touchEndX = 0;
-            });
-        })();
-
-
-
-        populateYearFilter();
+// Event listeners
+categoryTabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentCategory = tab.dataset.category;
+        currentYear = ''; // Reset year when changing category
+        yearFilter.value = '';
+        updateCategoryTabs();
+        updateYearFilter();
         renderGallery();
+        updateURL();
+    });
+});
+
+yearFilter.addEventListener("change", (e) => {
+    currentYear = e.target.value;
+    renderGallery(currentYear);
+    updateURL();
+});
+
+// Fullscreen viewer events
+document.getElementById("fullscreen-viewer").addEventListener("click", (e) => {
+    if (e.target.id === "fullscreen-viewer") {
+        closeFullscreen();
+    }
+});
+
+document.querySelector(".close-btn").addEventListener("click", closeFullscreen);
+
+document.getElementById("fullscreen-prev").addEventListener("click", (e) => {
+    e.stopPropagation();
+    showPreviousImage();
+});
+
+document.getElementById("fullscreen-next").addEventListener("click", (e) => {
+    e.stopPropagation();
+    showNextImage();
+});
+
+// Prevent closing when clicking on the image itself
+document.querySelector("#fullscreen-viewer img").addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+
+// Keyboard navigation
+document.addEventListener("keydown", (e) => {
+    const viewer = document.getElementById("fullscreen-viewer");
+    if (viewer.style.display === "flex") {
+        switch(e.key) {
+            case "Escape":
+                closeFullscreen();
+                break;
+            case "ArrowLeft":
+                showPreviousImage();
+                break;
+            case "ArrowRight":
+                showNextImage();
+                break;
+        }
+    }
+});
+
+// Mobile swipe support for fullscreen viewer
+(function() {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const threshold = 50;
+
+    const viewer = document.getElementById("fullscreen-viewer");
+    const img = viewer.querySelector("img");
+
+    img.addEventListener("touchstart", function(e) {
+        if (e.touches.length === 1) {
+            touchStartX = e.touches[0].clientX;
+        }
+    });
+
+    img.addEventListener("touchmove", function(e) {
+        if (e.touches.length === 1) {
+            touchEndX = e.touches[0].clientX;
+        }
+    });
+
+    img.addEventListener("touchend", function(e) {
+        if (touchStartX && touchEndX) {
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    showPreviousImage();
+                } else {
+                    showNextImage();
+                }
+            }
+        }
+        touchStartX = 0;
+        touchEndX = 0;
+    });
+})();
+
+// Handle browser back/forward buttons
+window.addEventListener('popstate', (e) => {
+    if (e.state) {
+        currentCategory = e.state.category || 'digital';
+        currentYear = e.state.year || '';
+    } else {
+        initializeFromURL();
+    }
+    updateCategoryTabs();
+    updateYearFilter();
+    renderGallery();
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeFromURL();
+});
+
     </script>
 
 <footer>
-    <p>&copy; 2024 Filip Černý. All rights reserved.</p>
+    <p> 2025 Filip Černý.</p>
     <div class="social-links">
       <a href="https://x.com/fl1p0655413" target="_blank" class="social-icon">X</a>
       <a href="https://instagram.com/yourusername" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
