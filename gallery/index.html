@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="js/hamburger.js" defer></script>
+<script src="../js/hamburger.js" defer></script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gallery</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="css/gallery.css">
+<link rel="stylesheet" href="../css/gallery.css">
 </head>
-<link rel="stylesheet" href="css/style.css">
-<script src="js/script.js" defer></script>
+<link rel="stylesheet" href="../css/style.css">
+<script src="../js/script.js" defer></script>
 <body>
 <header>
 <nav>
@@ -19,10 +19,10 @@
 <i id="close-icon" class="fas fa-times" style="display:none;"></i>
 </button>
 <ul id="nav-menu">
-<li><a href="index.html" ><i class="fas fa-home"></i>Home</a></li>
-<li><a href="gallery.html" class="active"><i class="fa-solid fa-images"></i>Gallery</a></li>
-<li><a href="docs/cernyfilip.pdf" target="_blank"><i class="fa-solid fa-file"></i>CV</a></li>
-<li><a href="contact.html" ><i class="fas fa-phone"></i>Contact</a></li>
+<li><a href="../index.html" ><i class="fas fa-home"></i>Home</a></li>
+<li><a href="index.html" class="active"><i class="fa-solid fa-images"></i>Gallery</a></li>
+<li><a href="../docs/cernyfilip.pdf" target="_blank"><i class="fa-solid fa-file"></i>CV</a></li>
+<li><a href="../contact.html" ><i class="fas fa-phone"></i>Contact</a></li>
 <li>
 <button id="theme-toggle">
 <i id="theme-icon" class="fa fa-moon"></i>
@@ -150,12 +150,14 @@ let groupedByYear = {};
 
 // URL handling functions
 function parseUrl() {
-    const hash = window.location.hash.substring(1); // Remove the #
-    const params = hash.split('/').filter(p => p);
+    const path = window.location.pathname;
+    const params = path.split('/').filter(p => p);
     
-    if (params.length > 0) {
-        const photoType = params[0];
-        const year = params[1];
+    // Look for gallery in the path
+    const galleryIndex = params.indexOf('gallery');
+    if (galleryIndex !== -1) {
+        const photoType = params[galleryIndex + 1];
+        const year = params[galleryIndex + 2];
         
         if (photoType === 'digital' || photoType === 'film') {
             currentPhotoType = photoType;
@@ -167,12 +169,13 @@ function parseUrl() {
 }
 
 function updateUrl() {
-    let newHash = `#/${currentPhotoType}`;
+    const basePath = window.location.pathname.split('/gallery')[0];
+    let newPath = `${basePath}/gallery/${currentPhotoType}`;
     if (currentYear) {
-        newHash += `/${currentYear}`;
+        newPath += `/${currentYear}`;
     }
     
-    window.history.replaceState({}, '', newHash);
+    window.history.replaceState({}, '', newPath);
 }
 
 function getCurrentImages() {
@@ -180,7 +183,7 @@ function getCurrentImages() {
 }
 
 function getPhotoPath(imageName) {
-    return `photos/${currentPhotoType}/${imageName}`;
+    return `../photos/${currentPhotoType}/${imageName}`;
 }
 
 function groupImagesByYear(images) {
@@ -425,18 +428,6 @@ document.addEventListener("keydown", (e) => {
     });
 })();
 
-// Handle browser back/forward buttons
-window.addEventListener('hashchange', () => {
-    parseUrl();
-    groupedByYear = groupImagesByYear(getCurrentImages());
-    populateYearFilter();
-    renderGallery(currentYear);
-    
-    // Update button states
-    document.querySelectorAll('.photo-type-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`${currentPhotoType}-btn`).classList.add('active');
-});
-
 // Initialize when page loads
 initializeGallery();
 </script>
@@ -445,7 +436,7 @@ initializeGallery();
 <div class="social-links">
 <a href="https://x.com/fl1p0655413" target="_blank" class="social-icon">X</a>
 <a href="https://instagram.com/yourusername" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-<a href="contact.html" class="social-icon"><i class="fas fa-envelope"></i></a>
+<a href="../contact.html" class="social-icon"><i class="fas fa-envelope"></i></a>
 <button id="share-btn" class="social-icon"><i class="fas fa-share-alt"></i></button>
 </div>
 </footer>
