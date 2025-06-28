@@ -476,14 +476,14 @@ ul li a.active {
   background: transparent;
   border: none;
   font-size: 2.5rem;
-  color: var(--accent);
+  color: var(--text);
   cursor: pointer;
   transition: transform 0.3s ease, color 0.3s ease;
   position: relative;
 }
 
 .toggle-title .photo-type-btn.active {
-  color: var(--text);
+  color: var(--accent);
   transform: scale(1.1);
 }
 
@@ -509,3 +509,22 @@ ul li a.active {
     transform: translateY(0);
   }
 }
+
+@keyframes rotateForward {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes rotateBackward {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+.rotate-forward {
+  animation: rotateForward 1s linear;
+}
+
+.rotate-backward {
+  animation: rotateBackward 1s linear;
+}
+
