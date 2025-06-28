@@ -461,3 +461,51 @@ ul li a.active {
   transform: scale(1.1);
   pointer-events: none; /* optional: disable clicks on active */
 }
+
+.toggle-title {
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  animation: fadeIn 1s ease-out;
+}
+
+.toggle-title .photo-type-btn {
+  background: transparent;
+  border: none;
+  font-size: 2.5rem;
+  color: var(--accent);
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+.toggle-title .photo-type-btn.active {
+  color: var(--text);
+  transform: scale(1.1);
+}
+
+.toggle-title .photo-type-btn i {
+  margin-right: 0.5rem;
+}
+
+.toggle-title .divider {
+  font-size: 2.5rem;
+  color: #888;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
