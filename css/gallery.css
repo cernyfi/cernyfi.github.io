@@ -195,3 +195,53 @@
         .close-btn:hover {
             color: var(--accent);
         }
+
+        .toggle-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  animation: fadeIn 1s ease-out;
+}
+
+.toggle-title .photo-type-btn {
+  background: transparent;
+  border: none;
+  font-size: 2.5rem;
+  color: var(--primary-text, #333);
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+.toggle-title .photo-type-btn.active {
+  color: var(--accent, #007bff);
+  transform: scale(1.1);
+}
+
+.toggle-title .photo-type-btn i {
+  margin-right: 0.5rem;
+}
+
+.toggle-title .divider {
+  font-size: 2.5rem;
+  color: #888;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
