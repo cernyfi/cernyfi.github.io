@@ -493,39 +493,36 @@ const gallery = document.getElementById("gallery");
 const yearFilter = document.getElementById("yearFilter");
 const categoryTabs = document.querySelectorAll('.category-tab');
 
-// URL management
+// URL management - using hash-based routing to avoid 404 issues
 function updateURL() {
-    const baseUrl = window.location.origin + window.location.pathname.replace('/gallery.html', '/gallery');
-    let newUrl = `${baseUrl}/${currentCategory}`;
+    let newHash = `#${currentCategory}`;
     if (currentYear) {
-        newUrl += `/${currentYear}`;
+        newHash += `/${currentYear}`;
     }
-    window.history.pushState({category: currentCategory, year: currentYear}, '', newUrl);
+    
+    // Replace the current URL instead of pushing a new one to avoid accumulation
+    window.history.replaceState({category: currentCategory, year: currentYear}, '', 
+        window.location.pathname + newHash);
 }
 
 function parseURL() {
-    const path = window.location.pathname;
     const hash = window.location.hash;
     
-    // Handle both old and new URL formats
+    // Default values
     let category = 'digital';
     let year = '';
     
-    if (path.includes('/gallery/')) {
-        const parts = path.split('/gallery/')[1].split('/');
-        if (parts[0] && ['digital', 'film'].includes(parts[0])) {
-            category = parts[0];
-        }
-        if (parts[1] && !isNaN(parts[1])) {
-            year = parts[1];
-        }
-    } else if (hash) {
-        // Fallback for hash-based routing
+    if (hash && hash.length > 1) {
+        // Remove the # and split by /
         const hashParts = hash.substring(1).split('/');
+        
+        // First part should be category
         if (hashParts[0] && ['digital', 'film'].includes(hashParts[0])) {
             category = hashParts[0];
         }
-        if (hashParts[1] && !isNaN(hashParts[1])) {
+        
+        // Second part should be year
+        if (hashParts[1] && !isNaN(hashParts[1]) && hashParts[1].length === 4) {
             year = hashParts[1];
         }
     }
@@ -795,17 +792,13 @@ document.addEventListener("keydown", (e) => {
     });
 })();
 
-// Handle browser back/forward buttons
+// Handle browser back/forward buttons and hash changes
 window.addEventListener('popstate', (e) => {
-    if (e.state) {
-        currentCategory = e.state.category || 'digital';
-        currentYear = e.state.year || '';
-    } else {
-        initializeFromURL();
-    }
-    updateCategoryTabs();
-    updateYearFilter();
-    renderGallery();
+    initializeFromURL();
+});
+
+window.addEventListener('hashchange', (e) => {
+    initializeFromURL();
 });
 
 // Initialize on page load
