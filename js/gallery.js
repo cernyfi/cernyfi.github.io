@@ -1,142 +1,83 @@
+// --- Image Data ---
 const digitalImages = [
-        { name: "IMG_1671.JPG", date: "2025-01-29" },
-        { name: "IMG_1520.JPG", date: "2025-01-29" },
-        { name: "IMG_1299.JPG", date: "2024-10-28" },
-        // ... (rest of your digitalImages)
-    ].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
+    { name: "IMG_1671.JPG", date: "2025-01-29" },
+    { name: "IMG_1520.JPG", date: "2025-01-29" },
+    { name: "IMG_1299.JPG", date: "2024-10-28" },
+    { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31" }
+].map(img => {
+    const year = new Date(img.date).getFullYear();
+    return {
+        ...img,
+        year,
+        preview: `/photos/thumbs/${year}/${img.name}`
+    };
+});
 
-    const filmImages = [
-        { name: "film_001.jpg", date: "2024-08-15" },
-        { name: "film_010.jpg", date: "2021-04-12" },
-        // ... (rest of your filmImages)
-    ].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
+const filmImages = [
+    { name: "film_001.jpg", date: "2024-08-15" },
+    { name: "film_010.jpg", date: "2021-04-12" }
+].map(img => {
+    const year = new Date(img.date).getFullYear();
+    return {
+        ...img,
+        year,
+        preview: `/photos/thumbs/${year}/${img.name}`
+    };
+});
 
-    // --- State ---
-    let currentPhotoType = 'digital';
-    let currentYear = '';
-    let currentImages = [];
-    let currentImageIndex = 0;
-    let groupedByYear = {};
+// --- State ---
+let currentPhotoType = 'digital';
+let currentYear = '';
+let currentImages = [];
+let currentImageIndex = 0;
+let groupedByYear = {};
 
-    // --- URL Helpers ---
-    function parseUrl() {
-        const path = window.location.hash.startsWith("#/") ? window.location.hash.slice(1) : window.location.pathname;
-        const segments = path.split('/').filter(Boolean);
-        const galleryIndex = segments.indexOf('gallery');
-        if (galleryIndex !== -1) {
-            currentPhotoType = segments[galleryIndex + 1] || 'digital';
-            const yearCandidate = segments[galleryIndex + 2];
-            if (yearCandidate && /^\d{4}$/.test(yearCandidate)) {
-                currentYear = yearCandidate;
-            }
-        }
-    }
+// --- URL Handling ---
+function parseUrl() {
+    const params = (window.location.hash || window.location.pathname).split('/').filter(Boolean);
+    const galleryIndex = params.indexOf('gallery');
+    if (params[galleryIndex + 1]) currentPhotoType = params[galleryIndex + 1];
+    if (!isNaN(params[galleryIndex + 2])) currentYear = params[galleryIndex + 2];
+}
 
-    function updateUrl() {
-        const basePath = window.location.pathname.split('/gallery')[0];
-        let path = `${basePath}/gallery/${currentPhotoType}`;
-        if (currentYear) path += `/${currentYear}`;
-        window.history.replaceState({}, '', path);
-    }
+function updateUrl() {
+    const base = window.location.pathname.split('/gallery')[0];
+    const yearPart = currentYear ? `/${currentYear}` : '';
+    history.replaceState({}, '', `${base}/gallery/${currentPhotoType}${yearPart}`);
+}
 
-    // --- Path Builder ---
-    function getPhotoPath(image) {
-        if (currentPhotoType === 'digital') {
-            return `/photos/digital/${image.year}/thumbs/${image.name}`;
-        } else {
-            return `/photos/film/thumbs/${image.name}`;
-        }
-    }
+// --- Helpers ---
+function getCurrentImages() {
+    return currentPhotoType === 'digital' ? digitalImages : filmImages;
+}
 
-    function getFullPhotoPath(image) {
-        if (currentPhotoType === 'digital') {
-            return `/photos/digital/${image.year}/${image.name}`;
-        } else {
-            return `/photos/film/${image.name}`;
-        }
-    }
+function getPhotoPath(name, year) {
+    return currentPhotoType === 'digital' 
+        ? `/photos/digital/${year}/${name}` 
+        : `/photos/film/${name}`;
+}
 
-    // --- Grouping ---
-    function groupImagesByYear(images) {
-        return images.reduce((acc, img) => {
-            const year = img.year;
-            acc[year] = acc[year] || [];
-            acc[year].push(img);
-            return acc;
-        }, {});
-    }
+function groupImages(images) {
+    return images.sort((a, b) => new Date(b.date) - new Date(a.date))
+                 .reduce((acc, img) => {
+                     const year = img.year;
+                     acc[year] = acc[year] || [];
+                     acc[year].push(img);
+                     return acc;
+                 }, {});
+}
 
-    function updateCurrentImages(filterYear = "") {
-        const images = currentPhotoType === 'digital' ? digitalImages : filmImages;
-        groupedByYear = groupImagesByYear(images);
-        currentImages = filterYear ? groupedByYear[filterYear] || [] :
-            Object.values(groupedByYear).flat();
-    }
-
-    // --- Rendering ---
-    function renderGallery(yearFilter = "") {
-        const gallery = document.getElementById("gallery");
-        gallery.innerHTML = "";
-        updateCurrentImages(yearFilter);
-        const years = Object.keys(groupedByYear).sort((a, b) => b - a);
-
-        (yearFilter ? [yearFilter] : years).forEach(year => {
-            const images = groupedByYear[year];
-            if (!images) return;
-
-            const section = document.createElement("div");
-            section.className = "year-group";
-
-            const title = document.createElement("div");
-            title.className = "year-title";
-            title.textContent = year;
-
-            const grid = document.createElement("div");
-            grid.className = "year-grid";
-
-            images.forEach((img, index) => {
-                const card = document.createElement("div");
-                card.className = "photo-card";
-                card.dataset.filename = img.name;
-
-                const thumb = document.createElement("img");
-                thumb.src = getPhotoPath(img);
-                thumb.alt = img.name;
-                thumb.loading = "lazy";
-                thumb.onerror = () => {
-                    thumb.src = 'data:image/svg+xml;base64,...'; // Optional fallback
-                    thumb.alt = 'Image not found';
-                };
-
-                const label = document.createElement("div");
-                label.className = "photo-date";
-                label.textContent = new Date(img.date).toLocaleDateString();
-
-                card.appendChild(thumb);
-                card.appendChild(label);
-                card.addEventListener("click", () => openFullscreen(img));
-
-                grid.appendChild(card);
-            });
-
-            section.appendChild(title);
-            section.appendChild(grid);
-            gallery.appendChild(section);
-        });
-    }
-
-    function populateYearFilter() {
-        const yearFilter = document.getElementById("yearFilter");
-        yearFilter.innerHTML = '<option value="">All Years</option>';
-        const years = Object.keys(groupedByYear).sort((a, b) => b - a);
-        years.forEach(year => {
-            const option = document.createElement("option");
-            option.value = year;
-            option.textContent = year;
-            if (year === currentYear) option.selected = true;
-            yearFilter.appendChild(option);
-        });
-    }
+function populateYearFilter() {
+    const filter = document.getElementById("yearFilter");
+    filter.innerHTML = '<option value="">All Years</option>';
+    Object.keys(groupedByYear).sort((a, b) => b - a).forEach(year => {
+        const option = document.createElement("option");
+        option.value = year;
+        option.textContent = year;
+        if (year === currentYear) option.selected = true;
+        filter.appendChild(option);
+    });
+}
 
     // --- Fullscreen Viewer ---
     function openFullscreen(image) {
