@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // Map filenames to page names (adjust as needed)
   const pageNames = {
     '': 'Home', // root path (cernyfi.github.io or cernyfi.github.io/)
-    'gallery': 'Gallery',
-    'contact': 'Contact',
+    '/gallery/': 'Gallery',
+    '/contact/': 'Contact',
   };
 
   const currentPath = window.location.pathname.split("/").pop();
