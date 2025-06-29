@@ -1,0 +1,4 @@
+bash -c 'for img in *.{jpg,jpeg,png,JPEG,JPG}; do
+  [ -f "$img" ] || continue
+  magick "$img" -resize 1000x1000 "${img}.tmp" && mv "${img}.tmp" "$img"
+done'
