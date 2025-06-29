@@ -79,18 +79,19 @@ const digitalImages = [
     let groupedByYear = {};
 
     // --- URL Helpers ---
-    function parseUrl() {
-        const path = window.location.hash.startsWith("#/") ? window.location.hash.slice(1) : window.location.pathname;
-        const segments = path.split('/').filter(Boolean);
-        const galleryIndex = segments.indexOf('gallery');
-        if (galleryIndex !== -1) {
-            currentPhotoType = segments[galleryIndex + 1] || 'digital';
-            const yearCandidate = segments[galleryIndex + 2];
-            if (yearCandidate && /^\d{4}$/.test(yearCandidate)) {
-                currentYear = yearCandidate;
-            }
+function parseUrl() {
+            let path = window.location.pathname;
+            let hash = window.location.hash;
+            if (hash && hash.startsWith('#/')) path = hash.substring(1);
+            const params = path.split('/').filter(p => p);
+            let galleryIndex = params.indexOf('gallery');
+            if (galleryIndex === -1 && window.location.pathname.includes('/gallery/')) galleryIndex = -1;
+            const photoType = params[galleryIndex + 1];
+            const year = params[galleryIndex + 2];
+            if (photoType === 'digital' || photoType === 'film') currentPhotoType = photoType;
+            if (year && !isNaN(year)) currentYear = year;
         }
-    }
+
 
     function updateUrl() {
         const basePath = window.location.pathname.split('/gallery')[0];
@@ -164,7 +165,7 @@ const digitalImages = [
                 thumb.alt = img.name;
                 thumb.loading = "lazy";
                 thumb.onerror = () => {
-                    thumb.src = 'data:image/svg+xml;base64,...'; // Optional fallback
+                    thumb.src = 'data:image/svg+xml;base64,...';
                     thumb.alt = 'Image not found';
                 };
 
@@ -226,7 +227,6 @@ const digitalImages = [
         openFullscreen(currentImages[currentImageIndex]);
     }
 
-    // --- Initialization ---
     function switchPhotoType(type) {
         currentPhotoType = type;
         currentYear = '';
@@ -244,7 +244,6 @@ const digitalImages = [
         if (currentYear) renderGallery(currentYear);
     }
 
-    // --- Event Listeners ---
     document.getElementById("digital-btn").addEventListener("click", () => switchPhotoType("digital"));
     document.getElementById("film-btn").addEventListener("click", () => switchPhotoType("film"));
 
@@ -271,7 +270,7 @@ const digitalImages = [
         }
     });
 
-    // Swipe navigation
+    // Mobile navigation
     (function setupTouchSwipe() {
         let startX = 0, endX = 0, threshold = 50;
         const img = document.querySelector("#fullscreen-viewer img");

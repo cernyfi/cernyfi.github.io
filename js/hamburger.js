@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const isMenuShown = navMenu.classList.toggle('show');
 
   if (isMenuShown) {
-    // Show close icon, hide hamburger icon
     hamburgerIcon.style.display = 'none';
     closeIcon.style.display = 'inline';
 
