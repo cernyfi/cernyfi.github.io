@@ -187,28 +187,6 @@
             });
         }
 
-      const rotator = document.getElementById('dividor');
-  let isForward = true;
-
-  document.getElementById('digital-btn').addEventListener('click', toggleRotation);
-  document.getElementById('film-btn').addEventListener('click', toggleRotation);
-
-  function toggleRotation() {
-    const icon = rotator.querySelector('i');
-
-    // Clear previous animation class to retrigger it
-    icon.classList.remove('rotate-forward', 'rotate-backward');
-
-    void icon.offsetWidth; // Force reflow to restart animation
-
-    if (isForward) {
-      icon.classList.add('rotate-forward');
-    } else {
-      icon.classList.add('rotate-backward');
-    }
-
-    isForward = !isForward;
-  }
         // --- Photo Type Switch ---
         function switchPhotoType(type) {
             currentPhotoType = type;

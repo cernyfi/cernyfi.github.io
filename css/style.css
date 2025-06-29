@@ -510,21 +510,4 @@ ul li a.active {
   }
 }
 
-@keyframes rotateForward {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes rotateBackward {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(-360deg); }
-}
-
-.rotate-forward {
-  animation: rotateForward 1s linear;
-}
-
-.rotate-backward {
-  animation: rotateBackward 1s linear;
-}
 
