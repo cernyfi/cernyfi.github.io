@@ -12,6 +12,7 @@ const digitalImages = [
     { name: "IMG_0559.JPG", date: "2024-07-11" },
     { name: "IMG_0485.JPG", date: "2024-07-10" },
     { name: "IMG_0397.JPG", date: "2024-07-10" },
+    { name: "IMG_0113.jpg", date: "2024-06-30" },
     { name: "20250309_104603.jpg", date: "2025-03-09" },
     { name: "20250308_133542.jpg", date: "2025-03-08" },
     { name: "20250306_114451.jpg", date: "2025-03-06" },
