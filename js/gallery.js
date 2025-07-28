@@ -1,5 +1,5 @@
 const digitalImages = [
-        { name: "IMG_1671.JPG", date: "2025-01-29" },
+    { name: "IMG_1671.JPG", date: "2025-01-29" },
     { name: "IMG_1520.JPG", date: "2025-01-29" },
     { name: "IMG_1299.JPG", date: "2024-10-28" },
     { name: "IMG_1289.JPG", date: "2024-10-28" },
@@ -65,29 +65,35 @@ const digitalImages = [
     { name: "IMG_2035.JPG", date: "2025-05-08"},
     { name: "IMG_2038.JPG", date: "2025-05-08"},
     { name: "IMG_2187.JPG", date: "2025-06-27"},
-{ name: "IMG_2188.jpeg", date: "2025-06-28"},
-{ name: "IMG_2218.jpeg", date: "2025-06-28"},
-{ name: "IMG_2226.jpeg", date: "2025-06-28"},
-{ name: "IMG_2239.jpeg", date: "2025-06-28"},
-{ name: "IMG_2244.jpeg", date: "2025-06-28"},
-{ name: "IMG_2247.jpeg", date: "2025-06-28"},
-{ name: "IMG_2261.jpeg", date: "2025-06-28"},
-{ name: "IMG_2267.jpeg", date: "2025-06-28"},
-{ name: "IMG_2275.jpeg", date: "2025-06-28"},
-{ name: "IMG_2277.jpeg", date: "2025-06-28"},
-{ name: "IMG_2283.jpeg", date: "2025-06-28"},
-{ name: "IMG_2285.jpeg", date: "2025-06-28"},
-{ name: "IMG_2291.jpeg", date: "2025-06-28"},
-{ name: "IMG_2296.jpeg", date: "2025-06-28"},
-{ name: "IMG_2319.jpeg", date: "2025-06-28"},
-
+    { name: "IMG_2188.jpeg", date: "2025-06-28"},
+    { name: "IMG_2218.jpeg", date: "2025-06-28"},
+    { name: "IMG_2226.jpeg", date: "2025-06-28"},
+    { name: "IMG_2239.jpeg", date: "2025-06-28"},
+    { name: "IMG_2244.jpeg", date: "2025-06-28"},
+    { name: "IMG_2247.jpeg", date: "2025-06-28"},
+    { name: "IMG_2261.jpeg", date: "2025-06-28"},
+    { name: "IMG_2267.jpeg", date: "2025-06-28"},
+    { name: "IMG_2275.jpeg", date: "2025-06-28"},
+    { name: "IMG_2277.jpeg", date: "2025-06-28"},
+    { name: "IMG_2283.jpeg", date: "2025-06-28"},
+    { name: "IMG_2285.jpeg", date: "2025-06-28"},
+    { name: "IMG_2291.jpeg", date: "2025-06-28"},
+    { name: "IMG_2296.jpeg", date: "2025-06-28"},
+    { name: "IMG_2319.jpeg", date: "2025-06-28"},
     { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31"}
-    ].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
+].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
 
-    const filmImages = [
-        { name: "film_001.jpg", date: "2024-08-15" },
-        { name: "film_010.jpg", date: "2021-04-12" },
-    ].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
+const filmImages = [
+    { name: "img1.png", date: "2025-07-01" },
+    { name: "img5.png", date: "2025-07-01" },
+    { name: "img6.png", date: "2025-07-01" },
+    { name: "img8.png", date: "2025-07-01" },
+    { name: "img16.png", date: "2025-07-01" },
+    { name: "img17.png", date: "2025-07-01" },
+    { name: "img021.png", date: "2025-07-01" },
+    { name: "img23.png", date: "2025-07-01" },
+    { name: "img024.png", date: "2025-07-01" },
+].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
 
     // --- State ---
     let currentPhotoType = 'digital';
