@@ -80,6 +80,15 @@ const digitalImages = [
     { name: "IMG_2291.jpeg", date: "2025-06-28"},
     { name: "IMG_2296.jpeg", date: "2025-06-28"},
     { name: "IMG_2319.jpeg", date: "2025-06-28"},
+    { name: "IMG-20250722-WA0008.jpg", date: "2025-07-11"},
+    { name: "IMG-20250722-WA0010.jpg", date: "2025-07-14"},
+    { name: "IMG-20250722-WA0015.jpg", date: "2025-07-09"},
+    { name: "IMG-20250722-WA0016.jpg", date: "2025-07-09"},
+    { name: "IMG-20250722-WA0017.jpg", date: "2025-07-09"},
+    { name: "IMG_3834.JPG", date: "2025-07-07"},
+    { name: "IMG_4527.JPG", date: "2025-07-08"},
+    { name: "IMG_4538.JPG", date: "2025-07-08"},
+    { name: "IMG_4554.JPG", date: "2025-07-08"},
     { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31"}
 ].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
 
