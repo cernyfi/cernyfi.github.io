@@ -90,7 +90,8 @@ const digitalImages = [
     { name: "IMG_4538.JPG", date: "2025-07-08"},
     { name: "IMG_4554.JPG", date: "2025-07-08"},
     { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31"}
-].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
+].map(img => ({ ...img, year: new Date(img.date).getFullYear() }))
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
 
 const filmImages = [
     { name: "img1.png", date: "2025-07-01" },
@@ -102,7 +103,21 @@ const filmImages = [
     { name: "img021.png", date: "2025-07-01" },
     { name: "img23.png", date: "2025-07-01" },
     { name: "img024.png", date: "2025-07-01" },
-].map(img => ({ ...img, year: new Date(img.date).getFullYear() }));
+    { name: "img13.png", date: "2025-07-27" },
+    { name: "img12.png", date: "2025-07-28" },
+    { name: "img2.png", date: "2025-07-29" },
+    { name: "img7.png", date: "2025-07-29" },
+    { name: "img11.png", date: "2025-07-28" },
+    { name: "img002.png", date: "2025-07-08" },
+    { name: "img004.png", date: "2025-07-08" },
+    { name: "img006.png", date: "2025-07-08" },
+    { name: "img012.png", date: "2025-07-12" },
+    { name: "img015.png", date: "2025-07-12" },
+    { name: "img016.png", date: "2025-07-12" },
+    { name: "img020.png", date: "2025-07-12" },
+    { name: "img022.png", date: "2025-07-12" },
+].map(img => ({ ...img, year: new Date(img.date).getFullYear() }))
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
 
     // --- State ---
     let currentPhotoType = 'digital';

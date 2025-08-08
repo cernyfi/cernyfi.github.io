@@ -2,3 +2,20 @@ bash -c 'for img in *.{jpg,jpeg,png,JPEG,JPG}; do
   [ -f "$img" ] || continue
   magick "$img" -resize 1000x1000 "${img}.tmp" && mv "${img}.tmp" "$img"
 done'
+
+
+
+preformatovani
+mogrify -format png *.bmp
+
+odstraneni bitmapy
+del *.bmp
+
+zmena velikosti plus novy adresar
+mkdir resized
+for img in *.png; do
+    convert "$img" -resize 1000x1000\> "resized/$img"
+done
+
+zmena velikosti 
+mogrify -resize "1000x1000>" *.png
