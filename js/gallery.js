@@ -89,7 +89,12 @@ const digitalImages = [
     { name: "IMG_4527.JPG", date: "2025-07-08"},
     { name: "IMG_4538.JPG", date: "2025-07-08"},
     { name: "IMG_4554.JPG", date: "2025-07-08"},
-    { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31"}
+    { name: "8A27486A-12AD-40B0-A385-BAD6E49D10E7_1_201_a.jpeg", date: "2025-05-31"},
+
+    { name: "IMG_9760.JPG", date: "2025-08-26"},
+    { name: "IMG_9788.JPG", date: "2025-08-26"},
+    { name: "IMG_9822.JPG", date: "2025-08-27"},
+    { name: "IMG_9843.JPG", date: "2025-08-27"},
 ].map(img => ({ ...img, year: new Date(img.date).getFullYear() }))
   .sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -116,6 +121,15 @@ const filmImages = [
     { name: "img016.png", date: "2025-07-12" },
     { name: "img020.png", date: "2025-07-12" },
     { name: "img022.png", date: "2025-07-12" },
+    { name: "img03.png", date: "2025-08-25" },
+    { name: "img05.png", date: "2025-08-26" },
+    { name: "img07.png", date: "2025-08-10" },
+    { name: "img08.png", date: "2025-08-26" },
+    { name: "img0016.png", date: "2025-08-14" },
+    { name: "img18.png", date: "2025-09-12" },
+    { name: "img24.png", date: "2025-08-15" },
+    { name: "img26.png", date: "2025-08-15" },
+
 ].map(img => ({ ...img, year: new Date(img.date).getFullYear() }))
   .sort((a, b) => new Date(b.date) - new Date(a.date));
 
