@@ -1,0 +1,50 @@
+---
+layout: base.njk
+title: Gallery
+favicon: /gallery/images-solid.svg
+extraCSS:
+  - /css/gallery.css
+extraJS:
+  - /js/gallery.js
+---
+<main>
+  <h1>
+    <div id="toggle-title" class="toggle-title">
+      <div id="photo-type-toggle" data-active="digital">
+        <button id="digital-btn" class="photo-type-btn active">
+          <i class="fas fa-camera"></i>
+          Digital
+        </button>
+        <button id="film-btn" class="photo-type-btn">
+          <i class="fas fa-film"></i>
+          Film
+        </button>
+        <span class="toggle-highlight" aria-hidden="true"></span>
+      </div>
+    </div>
+  </h1>
+  <div id="controls">
+    <select id="yearFilter">
+      <option value="">All Years</option>
+    </select>
+  </div>
+  <section id="gallery"></section>
+</main>
+
+<!-- Fullscreen Viewer -->
+<div id="fullscreen-viewer">
+  <span class="close-btn">&times;</span>
+  <button class="fullscreen-nav fullscreen-prev" id="fullscreen-prev">&#8249;</button>
+  <button class="fullscreen-nav fullscreen-next" id="fullscreen-next">&#8250;</button>
+  <img src="" alt="Fullscreen image">
+  <div class="fullscreen-date" id="fullscreen-date"></div>
+</div>
+
+<script>
+  // Generated at build time from the photos/thumbs/ folders + src/_data/photo-dates.json.
+  // Don't hand-edit this - add or fix photos there instead.
+  window.__GALLERY_DATA__ = {
+    digital: {{ photos.digital | dump | safe }},
+    film: {{ photos.film | dump | safe }}
+  };
+</script>
