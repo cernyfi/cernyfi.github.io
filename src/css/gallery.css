@@ -44,8 +44,17 @@
 @media (max-width: 900px) {
     .year-grid { column-count: 2; }
 }
+
+/* On phones, one huge full-width photo per row means you barely see any
+   photos without endless scrolling. A tight square-tile grid (like
+   Instagram's profile grid) shows many more photos at a glance. */
 @media (max-width: 600px) {
-    .year-grid { column-count: 1; }
+    .year-grid {
+        column-count: initial;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3px;
+    }
 }
 
 .photo-card {
@@ -57,6 +66,14 @@
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+    .photo-card {
+        margin-bottom: 0;
+        border-radius: 2px;
+        box-shadow: none;
+    }
 }
 
 .photo-card:hover {
@@ -73,6 +90,21 @@
     border-radius: 8px;
     display: block;
     transition: transform 0.3s;
+}
+
+@media (max-width: 600px) {
+    .photo-card img {
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        border-radius: 2px;
+    }
+
+    /* The grid is dense and deliberately minimal, like Instagram's - the
+       per-photo date badge is clutter here. It's still shown once you tap
+       into a photo (see .fullscreen-date). */
+    .photo-date {
+        display: none;
+    }
 }
 
 .photo-card:hover img {
@@ -105,6 +137,30 @@
     object-fit: contain;
     border-radius: 10px;
     box-shadow: 0 0 50px rgba(255,255,255,0.1);
+    transition: opacity 0.25s ease;
+}
+
+/* Spinner shown the instant you swipe/click to a photo, so the wait for a
+   full-resolution image to load reads as "loading" instead of a frozen or
+   blank screen that looks broken. */
+.fullscreen-loading {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    z-index: 10000;
+    pointer-events: none;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .fullscreen-nav {

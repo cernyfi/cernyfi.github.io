@@ -2,10 +2,14 @@
 <html>
 <head>
     <script>
+        // GitHub Pages has no server-side routing, so a direct link like
+        // /gallery/film/2025/IMG_1234.jpg 404s. This 404 page is GitHub's
+        // fallback for any unmatched URL, so we use it to redirect into
+        // the real gallery page with the original path preserved in the
+        // hash - gallery.js's parseUrl() reads it from there.
         const path = window.location.pathname;
         if (path.startsWith('/gallery/')) {
-            const params = path.replace('/gallery/', '');
-            window.location.replace('/gallery/#/' + params);
+            window.location.replace('/gallery/#' + path);
         }
     </script>
 </head>

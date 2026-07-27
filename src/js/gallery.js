@@ -10,9 +10,11 @@ const filmImages = (window.__GALLERY_DATA__.film || [])
     // --- State ---
     let currentPhotoType = 'digital';
     let currentYear = '';
+    let currentPhotoFilename = null;
     let currentImages = [];
     let currentImageIndex = 0;
     let groupedByYear = {};
+    let photoLoadToken = 0;
 
     // --- URL Helpers ---
 function parseUrl() {
@@ -24,10 +26,16 @@ function parseUrl() {
 
     const galleryIndex = params.indexOf('gallery');
     if (galleryIndex !== -1) {
-        const photoType = params[galleryIndex + 1];
-        const year = params[galleryIndex + 2];
-        if (photoType === 'digital' || photoType === 'film') currentPhotoType = photoType;
-        if (year && !isNaN(year)) currentYear = year;
+        const rest = params.slice(galleryIndex + 1);
+        if (rest[0] === 'digital' || rest[0] === 'film') currentPhotoType = rest[0];
+
+        // rest[1] is either a 4-digit year, a filename (if no year given), or absent.
+        if (rest[1] && /^\d{4}$/.test(rest[1])) {
+            currentYear = rest[1];
+            if (rest[2]) currentPhotoFilename = decodeURIComponent(rest[2]);
+        } else if (rest[1]) {
+            currentPhotoFilename = decodeURIComponent(rest[1]);
+        }
     }
 }
 
@@ -36,6 +44,7 @@ function parseUrl() {
         const basePath = window.location.pathname.split('/gallery')[0];
         let path = `${basePath}/gallery/${currentPhotoType}`;
         if (currentYear) path += `/${currentYear}`;
+        if (currentPhotoFilename) path += `/${encodeURIComponent(currentPhotoFilename)}`;
         window.history.replaceState({}, '', path);
     }
 
@@ -141,17 +150,61 @@ function parseUrl() {
     // --- Fullscreen Viewer ---
     function openFullscreen(image) {
         currentImageIndex = currentImages.findIndex(img => img.name === image.name);
+        currentPhotoFilename = image.name;
+        updateUrl();
+
         const viewer = document.getElementById("fullscreen-viewer");
         const viewerImg = viewer.querySelector("img");
-        viewerImg.src = getFullPhotoPath(image);
-        document.getElementById("fullscreen-date").textContent = new Date(image.date).toLocaleDateString();
+        const spinner = viewer.querySelector(".fullscreen-loading");
+
         viewer.style.display = "flex";
         document.body.style.overflow = "hidden";
+
+        // Show a spinner and hide the previous photo immediately, so
+        // switching photos always gives visible feedback instead of a
+        // frozen frame (or a black gap) while the full-resolution image
+        // loads. A token guards against rapid next/prev clicks resolving
+        // out of order.
+        const token = ++photoLoadToken;
+        spinner.style.display = "block";
+        viewerImg.style.opacity = "0";
+
+        const finishLoad = () => {
+            if (token !== photoLoadToken) return;
+            spinner.style.display = "none";
+            viewerImg.style.opacity = "1";
+        };
+        viewerImg.onload = finishLoad;
+        viewerImg.onerror = finishLoad;
+        viewerImg.src = getFullPhotoPath(image);
+
+        document.getElementById("fullscreen-date").textContent = new Date(image.date).toLocaleDateString();
+
+        preloadNeighbors();
+    }
+
+    // Fetches the next and previous full-resolution photos in the background
+    // so that by the time someone swipes/clicks to them, they're often
+    // already cached and appear instantly instead of triggering a fresh load.
+    function preloadNeighbors() {
+        if (currentImages.length <= 1) return;
+        const nextIdx = (currentImageIndex + 1) % currentImages.length;
+        const prevIdx = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+        [nextIdx, prevIdx].forEach(idx => {
+            const preloadImg = new Image();
+            preloadImg.src = getFullPhotoPath(currentImages[idx]);
+        });
     }
 
     function closeFullscreen() {
         document.getElementById("fullscreen-viewer").style.display = "none";
         document.body.style.overflow = "auto";
+    }
+
+    function closeFullscreenAndUpdateUrl() {
+        currentPhotoFilename = null;
+        closeFullscreen();
+        updateUrl();
     }
 
     function showPreviousImage() {
@@ -166,22 +219,43 @@ function parseUrl() {
         openFullscreen(currentImages[currentImageIndex]);
     }
 
+    function renderAll() {
+        updateCurrentImages(currentYear);
+        populateYearFilter();
+        renderGallery(currentYear);
+        document.querySelectorAll('.photo-type-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`${currentPhotoType}-btn`).classList.add('active');
+        document.getElementById('photo-type-toggle').dataset.active = currentPhotoType;
+    }
+
     function switchPhotoType(type) {
         currentPhotoType = type;
         currentYear = '';
+        currentPhotoFilename = null;
+        closeFullscreen();
         updateUrl();
-        updateCurrentImages();
-        populateYearFilter();
-        renderGallery();
-        document.querySelectorAll('.photo-type-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(`${type}-btn`).classList.add('active');
-        document.getElementById('photo-type-toggle').dataset.active = type;
+        renderAll();
     }
 
     function initializeGallery() {
         parseUrl();
-        switchPhotoType(currentPhotoType);
-        if (currentYear) renderGallery(currentYear);
+        renderAll();
+
+        if (currentPhotoFilename) {
+            const found = currentImages.find(img => img.name === currentPhotoFilename);
+            if (found) {
+                openFullscreen(found); // also calls updateUrl()
+                return;
+            }
+            // Filename in the URL doesn't match any known photo - drop it
+            // rather than leaving a broken/misleading URL.
+            currentPhotoFilename = null;
+        }
+
+        // Always settle on the clean pretty URL (e.g. /gallery/film/2025),
+        // whether we arrived via a normal click or via the 404-page
+        // redirect for a direct/refreshed link.
+        updateUrl();
     }
 
     document.getElementById("digital-btn").addEventListener("click", () => switchPhotoType("digital"));
@@ -189,22 +263,23 @@ function parseUrl() {
 
     document.getElementById("yearFilter").addEventListener("change", (e) => {
         currentYear = e.target.value;
+        currentPhotoFilename = null;
         updateUrl();
         renderGallery(currentYear);
     });
 
     document.getElementById("fullscreen-viewer").addEventListener("click", (e) => {
-        if (e.target.id === "fullscreen-viewer") closeFullscreen();
+        if (e.target.id === "fullscreen-viewer") closeFullscreenAndUpdateUrl();
     });
 
-    document.querySelector(".close-btn").addEventListener("click", closeFullscreen);
+    document.querySelector(".close-btn").addEventListener("click", closeFullscreenAndUpdateUrl);
     document.getElementById("fullscreen-prev").addEventListener("click", (e) => { e.stopPropagation(); showPreviousImage(); });
     document.getElementById("fullscreen-next").addEventListener("click", (e) => { e.stopPropagation(); showNextImage(); });
 
     // Keyboard navigation
     document.addEventListener("keydown", (e) => {
         if (document.getElementById("fullscreen-viewer").style.display === "flex") {
-            if (e.key === "Escape") closeFullscreen();
+            if (e.key === "Escape") closeFullscreenAndUpdateUrl();
             if (e.key === "ArrowLeft") showPreviousImage();
             if (e.key === "ArrowRight") showNextImage();
         }
