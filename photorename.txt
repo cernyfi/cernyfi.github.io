@@ -1,1 +1,58 @@
 exiftool -if '$filename =~ /^IMG/i' -d "%Y%m%d_%H%M%S%%-c.%%e" '-filename<DateTimeOriginal' .
+
+
+
+
+
+Add-Type -AssemblyName System.Drawing
+
+Get-ChildItem -Recurse -File -Include *.jpg, *.jpeg, *.png | ForEach-Object {
+    $originalImage = [System.Drawing.Image]::FromFile($_.FullName)
+    
+    # --- START OF THE NEW EXIF ORIENTATION CORRECTION SECTION ---
+    # The EXIF orientation property has the ID 0x0112.
+    if ($originalImage.PropertyIdList -contains 0x0112) {
+        $propertyItem = $originalImage.GetPropertyItem(0x0112)
+        $orientationValue = [BitConverter]::ToUInt16($propertyItem.Value, 0)
+
+        switch ($orientationValue) {
+            2 { $originalImage.RotateFlip([System.Drawing.RotateFlipType]::RotateNoneFlipX) } # Mirror horizontal
+            3 { $originalImage.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipNone) } # Rotate 180 degrees
+            4 { $originalImage.RotateFlip([System.Drawing.RotateFlipType]::Rotate180FlipX) } # Mirror vertical
+            5 { $originalImage.RotateFlip([System.Drawing.RotateFlipType]::Rotate90FlipX) } # Rotate 90 CW and flip horizontal
+            6 { $originalImage.RotateFlip([System.Drawing.RotateFlipType]::Rotate90FlipNone) } # Rotate 90 CW
+            7 { $originalImage.RotateFlip([System.Drawing.RotateFlipType]::Rotate270FlipX) } # Rotate 270 CW and flip horizontal
+            8 { $originalImage.RotateFlip([System.Drawing.RotateFlipType]::Rotate270FlipNone) } # Rotate 270 CW
+        }
+        
+        # After rotating, remove the orientation property so viewers don't re-rotate it.
+        $originalImage.RemovePropertyItem(0x0112)
+    }
+    # --- END OF THE NEW SECTION ---
+
+    # Calculate new dimensions based on the potentially rotated image.
+    $newWidth = 610
+    $newHeight = [int]($originalImage.Height * ($newWidth / $originalImage.Width))
+    
+    # Create the new resized image
+    $bitmap = New-Object System.Drawing.Bitmap($newWidth, $newHeight)
+    $graphics = [System.Drawing.Graphics]::FromImage($bitmap)
+    $graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+    $graphics.DrawImage($originalImage, 0, 0, $newWidth, $newHeight)
+    
+    # Clean up to release file lock
+    $graphics.Dispose()
+    $originalImage.Dispose()
+    
+    # Attempt to overwrite the original file.
+    try {
+        $bitmap.Save($_.FullName)
+        Write-Host "Corrected and resized: $($_.Name)" -ForegroundColor Green
+    }
+    catch {
+        Write-Error "Error saving file: $($_.FullName). The file may be in use. Error details: $_"
+    }
+    finally {
+        $bitmap.Dispose
+    }
+}
