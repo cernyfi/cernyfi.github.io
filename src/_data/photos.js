@@ -12,7 +12,7 @@ const OVERRIDES_PATH = path.join(__dirname, "photo-dates.json");
 // Returns { date: "YYYY-MM-DD", guessed: true } or null if nothing matched.
 function guessDateFromFilename(name) {
   // e.g. 20250309_104603.jpg -> 2025-03-09
-  let m = name.match(/^(\d{4})(\d{2})(\d{2})/);
+  let m = name.match(/^(\d{4})(\d{2})(\d{2})_\d{6}/);
   if (m) return `${m[1]}-${m[2]}-${m[3]}`;
 
   // e.g. IMG-20250722-WA0008.jpg (WhatsApp - date the photo was received, not necessarily taken)

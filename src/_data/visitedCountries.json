@@ -1,0 +1,105 @@
+{
+  "_readme": "Each key is the country's ISO 3166-1 alpha-3 code (e.g. Czechia = CZE, Slovakia = SVK, USA = USA). Find codes at https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3 . 'years' is an array of years you visited - leave it empty if you don't want to list them. Set 'manyTimes' to true for places you've been so often that a year list isn't useful - the map shows a darker shade and your 'manyTimesLabel' text (or a default) instead of / alongside the year list. Set 'home' to true for a country you actually live(d) in - shown in pink, separate from 'manyTimes', and you can mark more than one country as home. Delete this '_readme' key and the sample entries below once you've added your own data.",
+
+  "CZE": {
+    "name": "Czechia",
+    "years": [],
+    "home": true,
+    "homeLabel": "Home"
+  },
+  "SVK": {
+    "name": "Slovakia",
+    "years": [],
+    "manyTimes": true
+  },
+  "ITA": {
+    "name": "Italy",
+    "years": [2016, 2017, 2023],
+    "manyTimes": false
+  },
+  "DEU": {
+    "name": "Germany",
+    "years": [],
+    "manyTimes": true
+  },
+  "FRA": {
+    "name": "France",
+    "years": [2018, 2023, 2026],
+    "manyTimes": false
+  },
+  "POL": {
+    "name": "Poland",
+    "years": [],
+    "manyTimes": true
+  },
+  "AUT": {
+    "name": "Austria",
+    "years": [],
+    "manyTimes": true
+  },
+  "BIH": {
+    "name": "Bosnia and Herzegovina",
+    "years": [2024],
+    "manyTimes": false
+  },
+  "MNE": {
+    "name": "Montenegro",
+    "years": [2024],
+    "manyTimes": false
+  },
+  "ROU": {
+    "name": "Romania",
+    "years": [2019],
+    "manyTimes": false
+  },
+  "NLD": {
+    "name": "Netherlands",
+    "years": [2024, 2026],
+    "manyTimes": false
+  },
+  "BEL": {
+    "name": "Belgium",
+    "years": [2026],
+    "manyTimes": false
+  },
+  "ESP": {
+    "name": "Spain",
+    "years": [2024, 2025, 2025, 2026],
+    "manyTimes": false
+  },
+  "PRT": {
+    "name": "Portugal",
+    "years": [2022, 2026],
+    "manyTimes": false
+  },
+  "TUR": {
+    "name": "Turkey",
+    "years": [2024],
+    "manyTimes": false
+  },
+  "GRC": {
+    "name": "Greece",
+    "years": [2017, 2026],
+    "manyTimes": false
+  },
+  "HRV": {
+    "name": "Croatia",
+    "years": [],
+    "manyTimes": true
+  },
+  "GIB": {
+    "name": "Gibraltar",
+    "years": [2024],
+    "manyTimes": false
+  },
+  "GBR": {
+    "name": "United Kingdom",
+    "years": [2024],
+    "manyTimes": false
+  },
+  "HUN": {
+    "name": "Hungary",
+    "years": [2025],
+    "manyTimes": false
+  }
+}

@@ -19,6 +19,7 @@
    at different times. Elements can still add their own transitions for
    other properties (transform, opacity, etc.) alongside this. */
 *, *::before, *::after {
+  box-sizing: border-box;
   transition-property: background-color, color, border-color, box-shadow;
   transition-duration: 0.3s;
   transition-timing-function: ease;
@@ -44,98 +45,165 @@ body {
 header {
   background: var(--primary);
   color: var(--background);
-  padding: 20px 0;
   position: sticky;
   top: 0;
   z-index: 1000;
   flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-header ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.85rem 1.25rem;
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-@media (min-width: 769px) {
-  #hamburger-toggle {
-    display: none !important;
-  }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--background);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.2px;
+  flex-shrink: 0;
 }
 
-ul li a:hover,
-#theme-toggle:hover {
-  background-color: var(--accent);
-  color: var(--text);
-  border-color: var(--accent);
-  transform: scale(1.1);
+.brand i {
+  font-size: 1.05rem;
+  opacity: 0.9;
 }
 
-header ul li {
-  margin: 0 15px;
+header nav {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
 }
 
 #nav-menu {
   list-style: none;
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
   margin: 0;
   padding: 0;
-  transition: max-height 0.3s ease-in-out;
 }
 
 #nav-menu li {
   margin: 0;
 }
 
+/* Idle pill buttons read against the header via a soft translucent fill
+   instead of a permanent drop shadow - the shadow itself is reserved for
+   the moment a button is actually pressed (see the :active rules further
+   down, next to the base ul li a / #theme-toggle definitions). */
+ul li a.active {
+  background-color: rgba(255, 255, 255, 0.28);
+  font-weight: 600;
+}
+
 #hamburger-toggle {
-  display: flex;
+  display: none;
   align-items: center;
-  gap: 0px;
-  background-color: var(--primary);
+  gap: 10px;
+  background-color: rgba(255, 255, 255, 0.14);
   color: var(--background);
-  border: 0 solid var(--primary);
+  border: 0;
   border-radius: 25px;
-  padding: 4px 10px;
-  font-size: 24px;
+  padding: 6px 8px 6px 14px;
+  font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  border-width: 0;
+  box-shadow: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease;
 }
 
 #hamburger-toggle:hover {
   background-color: var(--accent);
   color: var(--text);
-  border-color: var(--accent);
-  transform: scale(1.1);
 }
 
-#hamburger-toggle:focus {
-  outline: none;
+#hamburger-toggle:focus-visible {
+  outline: 2px solid var(--background);
+  outline-offset: 2px;
+}
+
+#current-page-name {
+  font-size: 15px;
+}
+
+.hamburger-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.18);
+  font-size: 16px;
+}
+
+#hamburger-toggle:hover .hamburger-icon-wrap {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 @media (max-width: 768px) {
+  .header-inner {
+    padding: 0.75rem 1rem;
+    position: relative;
+  }
+
+  .brand span {
+    display: none;
+  }
+
+  .brand i {
+    font-size: 1.3rem;
+  }
+
+  header nav {
+    flex: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+  }
+
+  #hamburger-toggle {
+    display: flex;
+  }
+
   #nav-menu {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+    margin: 0 1rem;
+    padding: 0.75rem;
+    background: var(--primary);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
     max-height: 0;
     overflow: hidden;
-    gap: 8px;
-    padding: 0 1rem;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: max-height 0.25s ease-in-out, opacity 0.2s ease, transform 0.2s ease, padding 0.25s ease;
+    pointer-events: none;
   }
 
   #nav-menu.show {
     max-height: 400px;
-    padding-top: 0.5rem;
-    padding-bottom: 1rem;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   #nav-menu li {
@@ -152,9 +220,8 @@ header ul li {
     justify-content: center;
   }
 
-  /* At full width, the desktop treatment (25px pill radius + scale(1.1) on
-     active/hover) stretches into an oversized, lopsided blob. A gentler
-     rounded-row look with no scaling reads as a clean selected list item
+  /* At full width, the desktop pill radius reads oddly on a full-width
+     row - a gentler rounded-row look reads as a clean selected list item
      instead. */
   #nav-menu li a,
   #nav-menu li a.active,
@@ -167,23 +234,18 @@ header ul li {
   #nav-menu li #theme-toggle:hover {
     transform: none;
   }
-
-  #hamburger-toggle {
-    display: flex;
-    position: static;
-    width: fit-content;
-    margin: 0 auto;
-  }
-
-  header {
-    padding: 1rem 0;
-  }
 }
 
 
 main {
   padding: 2rem;
   flex: 1 0 auto;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+  }
 }
 
 /* Sits at the true bottom of the page content (not fixed over it), so on
@@ -266,7 +328,7 @@ ul li a {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.14);
   color: var(--background);
   border: 0px solid var(--accent);
   border-radius: 25px;
@@ -274,16 +336,30 @@ ul li a {
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  box-shadow: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease, box-shadow 0.15s ease;
   cursor: pointer;
 }
 
+ul li a:hover {
+  background-color: var(--accent);
+  color: var(--text);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
 
+/* A shadow only shows up while a button is actually being pressed - it's
+   tactile feedback for the press itself, not a permanent decoration. */
+ul li a:active,
+#theme-toggle:active,
+#hamburger-toggle:active {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  transform: scale(0.96);
+}
 
 #theme-toggle {
   display: inline-flex;
-  background-color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.14);
   color: var(--background);
   border: 0px solid var(--accent);
   padding: 8px 10px;
@@ -292,15 +368,15 @@ ul li a {
   cursor: pointer;
   align-items: right;
   border-radius: 25px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  box-shadow: none;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 #theme-toggle:hover {
   background-color: var(--accent);
   color: var(--text);
   border-color: var(--accent);
-  transform: scale(1.1);
+  transform: translateY(-1px);
 }
 
 #theme-toggle i {
@@ -314,9 +390,13 @@ ul li a {
 }
 
 .dark-theme ul li a {
-  background-color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.1);
   color: var(--background);
   border: 0px solid var(--primary);
+}
+
+.dark-theme ul li a.active {
+  background-color: rgba(255, 255, 255, 0.22);
 }
 
 .dark-theme ul li a:hover,
@@ -327,9 +407,17 @@ ul li a {
 }
 
 .dark-theme #theme-toggle {
-  background-color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.1);
   color: var(--background);
   border: 0px solid var(--primary);
+}
+
+.dark-theme #hamburger-toggle {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .hamburger-icon-wrap {
+  background-color: rgba(255, 255, 255, 0.16);
 }
 
 .dark-theme #theme-icon {
@@ -460,12 +548,14 @@ h1, h2 {
 
 @media (max-width: 768px) {
   .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller grid items for phones */
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); /* Fewer, larger tiles on phones */
+    gap: 8px;
+    padding: 6px; /* Slim side bezels instead of the desktop 10px */
   }
 
   .gallery-item {
     aspect-ratio: 1; /* Square aspect ratio for small screens */
+    border-radius: 6px;
   }
 }
 

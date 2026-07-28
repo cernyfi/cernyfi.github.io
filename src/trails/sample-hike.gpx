@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="sample" xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <name>Sample hike - replace me</name>
+    <trkseg>
+      <trkpt lat="50.0880" lon="14.4208"></trkpt>
+      <trkpt lat="50.0755" lon="14.4378"></trkpt>
+      <trkpt lat="50.0619" lon="14.4529"></trkpt>
+      <trkpt lat="50.0503" lon="14.4701"></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

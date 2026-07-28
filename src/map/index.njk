@@ -1,0 +1,70 @@
+---
+layout: base.njk
+title: Map
+favicon: /map/map-solid.svg
+extraCSS:
+  - https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css
+  - /css/map.css
+extraJS:
+  - https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js
+  - /js/map.js
+---
+<main class="map-page">
+  <h1>
+    <div id="toggle-title" class="toggle-title">
+      <div id="trail-type-toggle" data-active="all">
+        <button id="trails-all-btn" class="trail-type-btn active" data-type="all">
+          <i class="fa-solid fa-earth-europe"></i>
+          All
+        </button>
+        <button id="trails-bike-btn" class="trail-type-btn" data-type="bike">
+          <i class="fa-solid fa-person-biking"></i>
+          Bike
+        </button>
+        <button id="trails-hike-btn" class="trail-type-btn" data-type="hike">
+          <i class="fa-solid fa-person-hiking"></i>
+          Hike
+        </button>
+        <span class="toggle-highlight three" aria-hidden="true"></span>
+      </div>
+    </div>
+  </h1>
+
+  <div id="map-wrapper">
+    <div id="world-map" role="img" aria-label="World map showing visited countries and recorded trails"></div>
+
+    <div id="map-legend">
+      <div class="legend-item">
+        <span class="legend-swatch swatch-visited"></span>
+        Visited
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch swatch-many"></span>
+        Visited many times
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch swatch-home"></span>
+        Home
+      </div>
+      <div class="legend-item">
+        <span class="legend-line line-hike"></span>
+        Hiking trail
+      </div>
+      <div class="legend-item">
+        <span class="legend-line line-bike"></span>
+        Bike trail
+      </div>
+    </div>
+
+    <div id="map-stats"></div>
+  </div>
+</main>
+
+<script>
+  // Generated at build time from src/_data/visitedCountries.json and
+  // src/_data/trails.json. Don't hand-edit this - edit those files instead.
+  window.__MAP_DATA__ = {
+    countries: {{ visitedCountries | dump | safe }},
+    trails: {{ trails | dump | safe }}
+  };
+</script>

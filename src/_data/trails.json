@@ -1,0 +1,50 @@
+[
+  {
+    "_readme": "How to add a real trail: 1) On mapy.com open your saved route, use its Export / Download button and choose GPX. 2) Drop the .gpx file into src/trails/. 3) Add an entry below: 'gpx' is the path Eleventy will serve it at (/trails/yourfile.gpx), 'type' is 'bike' or 'hike', 'mapyUrl' is the link to the route on mapy.com (used for the 'Open in Mapy.com' link in the popup). Delete this entry and the sample trail below once you've added your own."
+  },
+  {
+    "id": "cechy",
+    "name": "Bike trip from South to North",
+    "type": "bike",
+    "date": "2024-05",
+    "description": "This is placeholder data so the map works out of the box. Replace it with a GPX file exported from mapy.com and update this entry (or delete both).",
+    "gpx": "/trails/cechy.gpx",
+    "mapyUrl": "https://mapy.com/"
+  },
+  {
+    "id": "balt",
+    "name": "Bike trip from Baltic Sea to Czechia",
+    "type": "bike",
+    "date": "2024-05",
+    "description": "This is placeholder data so the map works out of the box. Replace it with a GPX file exported from mapy.com and update this entry (or delete both).",
+    "gpx": "/trails/balt.gpx",
+    "mapyUrl": "https://mapy.com/"
+  },
+  {
+    "id": "camino",
+    "name": "Camino de Santiago",
+    "type": "hike",
+    "date": "2024-05",
+    "description": "This is placeholder data so the map works out of the box. Replace it with a GPX file exported from mapy.com and update this entry (or delete both).",
+    "gpx": "/trails/camino.gpx",
+    "mapyUrl": "https://mapy.com/"
+  },
+  {
+    "id": "croaut",
+    "name": "Bike trip from Croatia to Austria",
+    "type": "bike",
+    "date": "2024-05",
+    "description": "This is placeholder data so the map works out of the box. Replace it with a GPX file exported from mapy.com and update this entry (or delete both).",
+    "gpx": "/trails/croaut.gpx",
+    "mapyUrl": "https://mapy.com/"
+  },
+  {
+    "id": "mallorca",
+    "name": "Hike through Mallorca",
+    "type": "hike",
+    "date": "2024-05",
+    "description": "This is placeholder data so the map works out of the box. Replace it with a GPX file exported from mapy.com and update this entry (or delete both).",
+    "gpx": "/trails/mallorca.gpx",
+    "mapyUrl": "https://mapy.com/"
+  }
+]

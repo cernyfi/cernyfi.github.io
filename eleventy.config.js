@@ -3,6 +3,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/gallery/images-solid.svg");
+  eleventyConfig.addPassthroughCopy("src/map/map-solid.svg");
+  eleventyConfig.addPassthroughCopy("src/trails");
   eleventyConfig.addPassthroughCopy("src/contact/phone-solid.svg");
   eleventyConfig.addPassthroughCopy("src/404.html");
   eleventyConfig.addPassthroughCopy("src/Privacy policy");
